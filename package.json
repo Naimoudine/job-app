@@ -7,12 +7,18 @@
     "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
     "server": " cd server && npm run dev",
     "client": "cd client && npm run dev",
-    "db:migrate": "cd server && npm run migrate"
+    "db:migrate": "cd server && npm run migrate",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "concurrently": "^8.2.2"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^2.23.2",
+    "eslint": "^9.8.0"
   }
 }
