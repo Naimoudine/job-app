@@ -1,19 +1,21 @@
 import { faBookmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Link } from "react-router-dom";
 
-export default function OfferCard() {
+export default function OfferCard({offer}) {
   return (
-    <section className="w-full sm:w-fit h-[12rem] bg-gray-200 p-4 rounded-lg flex flex-col justify-between">
-      <h3>Senior Front end developper </h3>
-      <p>Netflix</p>
+    <section className="w-full sm:w-fit sm:w-[25rem] h-[18rem] bg-gray-200 p-4 rounded-lg flex flex-col gap-2 justify-between">
+      <h3>{offer.title}</h3>
+      <p>{offer.company_name}</p>
       <div className="flex flex-wrap gap-2">
-        <span className="tag">web</span>
-        <span className="tag">cdi</span>
-        <span className="tag">40k-50k</span>
+        <span className="tag">{offer.sector}</span>
+        <span className="tag">{offer.contract_type}</span>
+        <span className="tag">{offer.salary}</span>
       </div>
-      <div className="flex justify-between items-center">
-        <p className="text-gray-500 text-sm">27/07/2024</p>
+      <p className="text-sm text-gray-500">27/07/2024</p>
+      <div className="flex items-center justify-between">
         <FontAwesomeIcon icon={faBookmark} />
+        <Link className="self-end" to={`/offers/${offer.id}`}>See offer</Link>
       </div>
     </section>
   );

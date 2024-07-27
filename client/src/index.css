@@ -2,11 +2,11 @@
 
 @layer base {
   body {
-    @apply h-screen w-screen;
+    @apply w-screen h-screen;
   }
 
   #root {
-    @apply h-full w-screen;
+    @apply w-screen h-full;
   }
 
   h1 {
@@ -29,11 +29,11 @@
 
 @layer components {
   .wrapper {
-    @apply px-4 pt-16 md:max-w-[85rem] md:mx-auto;
+    @apply px-4 py-16 md:max-w-[85rem] md:mx-auto;
   }
 
   .tag {
-    @apply bg-gray-100 py-1 px-2 rounded-lg;
+    @apply px-2 py-1 bg-gray-100 rounded-lg;
   }
 }
 @tailwind utilities;
