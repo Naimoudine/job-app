@@ -1,0 +1,39 @@
+@tailwind base;
+
+@layer base {
+  body {
+    @apply h-screen w-screen;
+  }
+
+  #root {
+    @apply h-full w-screen;
+  }
+
+  h1 {
+    @apply text-4xl sm:text-6xl;
+  }
+
+  h2 {
+    @apply text-2xl sm:text-4xl;
+  }
+
+  h3 {
+    @apply text-xl sm:text-2xl;
+  }
+
+  button {
+    @apply py-2;
+  }
+}
+@tailwind components;
+
+@layer components {
+  .wrapper {
+    @apply px-4 pt-16 md:max-w-[85rem] md:mx-auto;
+  }
+
+  .tag {
+    @apply bg-gray-100 py-1 px-2 rounded-lg;
+  }
+}
+@tailwind utilities;
