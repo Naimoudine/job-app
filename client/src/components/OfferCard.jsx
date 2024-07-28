@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 export default function OfferCard({offer}) {
   return (
-    <section className="w-full sm:w-fit sm:w-[25rem] h-[18rem] bg-gray-200 p-4 rounded-lg flex flex-col gap-2 justify-between">
+    <section className="w-full md:w-[25rem] h-[18rem] bg-gray-200 p-4 rounded-lg flex flex-col gap-2 justify-between">
       <h3>{offer.title}</h3>
       <p>{offer.company_name}</p>
       <div className="flex flex-wrap gap-2">
