@@ -5,7 +5,7 @@ import "./index.css";
 
 import App from "./App.jsx";
 import HomePage from "./pages/HomePage.jsx";
-import OffersPage from "./pages/OffersPage.jsx";
+import OffersPage, {loader as offersLoader} from "./pages/OffersPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +18,7 @@ const router = createBrowserRouter([
       {
         path: "/offers",
         element: <OffersPage />,
+        loader: offersLoader
       },
     ],
   },
