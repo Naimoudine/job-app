@@ -24,5 +24,13 @@ create table offer (
   location varchar(255) not null,
   contract_type varchar(255) not null,
   company_id int unsigned not null,
-  foreign key(company_id) references company(id)
+  foreign key(company_id) references company(id) on delete cascade
+);
+
+create table applying (
+  id int unsigned primary key auto_increment not null,
+  user_id int unsigned not null, 
+  offer_id int unsigned not null,
+  foreign key(user_id) references user(id) on delete cascade,
+  foreign key(offer_id) references offer(id) on delete cascade
 );
