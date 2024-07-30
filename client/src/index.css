@@ -29,7 +29,7 @@
 
 @layer components {
   .wrapper {
-    @apply px-4 py-16 md:max-w-[85rem] md:mx-auto;
+    @apply h-full w-full px-4 py-16 md:max-w-[85rem] md:mx-auto;
   }
 
   .tag {

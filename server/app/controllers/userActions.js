@@ -10,15 +10,16 @@ const browse = async (req, res, next) => {
 };
 
 const add = async (req, res, next) => {
-  try {
-    const insertId = await tables.users.create(...req.body);
-    if (!insertId) {
-      throw new Error("Error while creating account");
-    }
-    res.json({ insertId });
-  } catch (error) {
-    next(error);
-  }
+  console.log(...req.body);
+  // try {
+  //   const insertId = await tables.users.create(...req.body);
+  //   if (!insertId) {
+  //     throw new Error("Error while creating account");
+  //   }
+  //   res.json({ insertId });
+  // } catch (error) {
+  //   next(error);
+  // }
 };
 
 module.exports = { browse, add };
