@@ -20,7 +20,7 @@ export default function HomePage() {
           the best search engine to find the job that suits your preferences
           perfectly
         </p>
-        <div className="flex flex-col sm:flex-row mt-8">
+        <div className="flex flex-col mt-8 sm:flex-row">
           <div className="sm:w-[90%] px-4 py-2 flex items-center border-2 border-zinc-900">
             <FontAwesomeIcon
               className="mr-4"
@@ -46,7 +46,7 @@ export default function HomePage() {
         </div>
       </section>
       <section className="mt-8 md:mt-16">
-        <h2>Discover comapnies</h2>
+        <h2>Discover companies</h2>
       </section>
     </div>
   );
