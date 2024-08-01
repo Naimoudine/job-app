@@ -14,8 +14,8 @@ export default function Navbar({ setIsNavModal }) {
           <NavLink>my offers</NavLink>
         </li>
       </ul>
-      <NavLink className="hidden sm:block" to="/login">
-        Login/Register
+      <NavLink className="hidden sm:block" to="/signin">
+        SignIn / SignUp
       </NavLink>
       <button
         type="button"

@@ -19,7 +19,7 @@ export default function NavModal({ navModal }) {
         onClick={() => setIsNavModal(false)}
       >
         <FontAwesomeIcon
-          className="absolute top-4 right-4 text-xl"
+          className="absolute text-xl top-4 right-4"
           icon={faXmark}
         />
       </button>
@@ -35,7 +35,7 @@ export default function NavModal({ navModal }) {
             <NavLink>Bookmarks</NavLink>
           </li>
           <li>
-            <NavLink>Login/Register</NavLink>
+            <NavLink to="/signIn">Sign In/Sign up</NavLink>
           </li>
         </ul>
       </nav>
