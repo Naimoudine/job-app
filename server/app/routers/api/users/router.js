@@ -7,7 +7,7 @@ const { hashPassword } = require("../../../services/auth");
 // controllers
 const { browse, add } = require("../../../controllers/userActions");
 
-router.get("", browse);
-router.post("", hashPassword, add);
+router.get("/", browse);
+router.post("/", hashPassword, add);
 
 module.exports = router;

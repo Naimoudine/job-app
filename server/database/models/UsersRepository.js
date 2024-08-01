@@ -11,10 +11,18 @@ class UsersRepository {
     return rows;
   }
 
-  async create(firstname, lastname, email, hashedPassword) {
+  async readByEmail(email) {
+    const [rows] = await this.database.query(
+      `select * from user where email = ?`,
+      [email]
+    );
+    return rows[0];
+  }
+
+  async create(user) {
     const [rows] = await this.database.query(
       `insert into ${this.table} (firstname, lastname, email, hashed_password) values (?, ?, ?, ?)`,
-      [firstname, lastname, email, hashedPassword]
+      [user.firstname, user.lastname, user.email, user.hashedPassword]
     );
     return rows.insertId;
   }

@@ -3,25 +3,22 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import OfferCard from "../components/OfferCard";
 
-
 export const loader = async () => {
   try {
     const response = await fetch(`${import.meta.env.VITE_API_URL}/offers`);
     const data = await response.json();
-    if(!response.ok) {
+    if (!response.ok) {
       throw new Error("error while fetching offers");
     }
     return data;
   } catch (error) {
-    throw new Error(error.message)
+    throw new Error(error.message);
   }
-}
+};
 
 export default function OffersPage() {
   const offers = useLoaderData();
 
-  console.log(offers);
-  
   return (
     <div className="wrapper">
       <section>
@@ -59,7 +56,8 @@ export default function OffersPage() {
       <section className="mt-8 sm:mt-16">
         <h2>Offers</h2>
         <div className="flex flex-col gap-6 mt-8 sm:flex-row sm:flex-wrap">
-          {offers && offers.map(offer => <OfferCard key={offer.id} offer={offer}/>)}
+          {offers &&
+            offers.map((offer) => <OfferCard key={offer.id} offer={offer} />)}
         </div>
       </section>
     </div>

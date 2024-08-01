@@ -3,8 +3,8 @@ const express = require("express");
 const router = express.Router();
 
 // controllers
-const { browse } = require("../../../controllers/offerAction");
+const { browse } = require("../../../controllers/offerActions");
 
-router.get("", browse);
+router.get("/", browse);
 
 module.exports = router;

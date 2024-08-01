@@ -1,7 +1,63 @@
-import { Form, Link } from "react-router-dom";
-import illu from "../assets/images/illustration.jpg";
+import {
+  Form,
+  Link,
+  useActionData,
+  useNavigate,
+  useRouteError,
+} from "react-router-dom";
+import photo from "../assets/images/desk.avif";
+import { useEffect } from "react";
+
+export const action = async ({ request }) => {
+  const formData = await request.formData();
+
+  const email = formData.get("email");
+  const password = formData.get("password");
+
+  try {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/login`, {
+      method: "post",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+      credentials: "include",
+    });
+
+    const { user } = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || "Unkwown error while signing in");
+    }
+
+    const userData = {
+      id: user?.id,
+      firstname: user?.firstname,
+      lastname: user?.lastname,
+      avatar: user?.avatar,
+      isAdmin: user?.is_admin,
+    };
+
+    localStorage.setItem("user", JSON.stringify(userData));
+
+    return userData;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
 
 export default function SignIn() {
+  const actionData = useActionData();
+  const navigate = useNavigate();
+  const error = useRouteError();
+
+  useEffect(() => {
+    if (actionData) {
+      navigate("/", { replace: true });
+    }
+  }, [actionData, navigate]);
+
   return (
     <div className="flex items-center w-full h-full">
       <div className="w-full h-full px-16 py-4 md:w-1/2">
@@ -17,7 +73,12 @@ export default function SignIn() {
               Sign Up
             </Link>
           </p>
-          <Form method="post" className="flex flex-col gap-10 mt-24">
+          {error && (
+            <span className="inline-block mt-4 font-semibold text-red-600">
+              {error.message}
+            </span>
+          )}
+          <Form method="POST" className="flex flex-col gap-10 mt-24">
             <label className="flex flex-col gap-2" htmlFor="email">
               Email*
               <input
@@ -48,7 +109,11 @@ export default function SignIn() {
         </section>
       </div>
       <div className="hidden w-1/2 h-full p-2 md:block">
-        <img className="w-full h-full rounded-lg" src={illu} alt="" />
+        <img
+          className="w-full h-full rounded-lg"
+          src={photo}
+          alt="a man working"
+        />
       </div>
     </div>
   );

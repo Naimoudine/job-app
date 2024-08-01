@@ -1,14 +1,45 @@
-import { Form, Link } from "react-router-dom";
-import illu from "../assets/images/illustration.jpg";
+import { Form, Link, redirect, useRouteError } from "react-router-dom";
+import photo from "../assets/images/desk.avif";
+
+export const action = async ({ request }) => {
+  const formData = await request.formData();
+
+  const firstname = formData.get("firstname");
+  const lastname = formData.get("lastname");
+  const email = formData.get("email");
+  const password = formData.get("password");
+
+  try {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/users`, {
+      method: "post",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        firstname,
+        lastname,
+        email,
+        password,
+      }),
+    });
+    const data = await response.json();
+    if (response.status !== 201) {
+      throw new Error(data.message || "Unknown Error while creating user");
+    }
+    return redirect("/signIp");
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
 
 export default function SignIn() {
+  const error = useRouteError();
+
   return (
     <div className="flex items-center w-full h-full">
       <div className="w-full h-full px-16 py-4 md:w-1/2">
         <p>SJH</p>
         <section className="mt-8">
           <h1>Welcome back</h1>
-          <p className="mt-8">
+          <p className="mt-4">
             No an account ?{" "}
             <Link
               className="font-semibold underline underline-offset-2"
@@ -17,6 +48,11 @@ export default function SignIn() {
               Sign In
             </Link>
           </p>
+          {error && (
+            <span className="inline-block mt-2 font-semibold text-red-600">
+              {error.message}
+            </span>
+          )}
           <Form method="post" className="flex flex-col gap-6 mt-8">
             <label className="flex flex-col gap-2" htmlFor="firstname">
               Firstname*
@@ -68,7 +104,11 @@ export default function SignIn() {
         </section>
       </div>
       <div className="hidden w-1/2 h-full p-2 md:block">
-        <img className="w-full h-full rounded-lg" src={illu} alt="" />
+        <img
+          className="w-full h-full rounded-lg"
+          src={photo}
+          alt="a man workin"
+        />
       </div>
     </div>
   );

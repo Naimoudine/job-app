@@ -6,8 +6,8 @@ import "./index.css";
 import App from "./App.jsx";
 import HomePage from "./pages/HomePage.jsx";
 import OffersPage, { loader as offersLoader } from "./pages/OffersPage.jsx";
-import SignIn from "./pages/SignIn.jsx";
-import SignUp from "./pages/SignUp.jsx";
+import SignIn, { action as signInAction } from "./pages/SignIn.jsx";
+import SignUp, { action as signUpAction } from "./pages/SignUp.jsx";
 
 const router = createBrowserRouter([
   {
@@ -27,10 +27,14 @@ const router = createBrowserRouter([
   {
     path: "/signin",
     element: <SignIn />,
+    action: signInAction,
+    errorElement: <SignIn />,
   },
   {
     path: "/signup",
     element: <SignUp />,
+    action: signUpAction,
+    errorElement: <SignUp />,
   },
 ]);
 
