@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import photo from "../assets/images/desk.avif";
 import { useEffect } from "react";
+import { useAuth } from "../hooks/useAuth";
 
 export const action = async ({ request }) => {
   const formData = await request.formData();
@@ -51,9 +52,11 @@ export default function SignIn() {
   const actionData = useActionData();
   const navigate = useNavigate();
   const error = useRouteError();
+  const { setAuth } = useAuth();
 
   useEffect(() => {
     if (actionData) {
+      setAuth(actionData);
       navigate("/", { replace: true });
     }
   }, [actionData, navigate]);

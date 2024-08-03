@@ -2,6 +2,7 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
 
 export default function HomePage() {
   const inputRef = useRef();
@@ -11,6 +12,8 @@ export default function HomePage() {
     const search = inputRef.current.value;
     navigate(`/offers?search=${search}`);
   };
+
+  const { auth } = useAuth();
 
   return (
     <div className="wrapper">

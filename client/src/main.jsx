@@ -1,6 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  redirect,
+  RouterProvider,
+} from "react-router-dom";
 import "./index.css";
 
 import App from "./App.jsx";
@@ -8,6 +12,27 @@ import HomePage from "./pages/HomePage.jsx";
 import OffersPage, { loader as offersLoader } from "./pages/OffersPage.jsx";
 import SignIn, { action as signInAction } from "./pages/SignIn.jsx";
 import SignUp, { action as signUpAction } from "./pages/SignUp.jsx";
+import { AuthProvider } from "./hooks/useAuth.jsx";
+import { checkAuth } from "./utils/api.js";
+
+const protectedRoute = (routeConfig) => {
+  return {
+    ...routeConfig,
+    loader: async (args) => {
+      const isAllowed = await checkAuth();
+
+      if (!isAllowed) {
+        return redirect("/signin");
+      }
+
+      if (routeConfig.loader) {
+        routeConfig.loader(args);
+      }
+
+      return null;
+    },
+  };
+};
 
 const router = createBrowserRouter([
   {
@@ -40,6 +65,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   </React.StrictMode>
 );

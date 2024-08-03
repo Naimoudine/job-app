@@ -1,4 +1,5 @@
 const argon2 = require("argon2");
+const jwt = require("jsonwebtoken");
 
 const hashingOptions = {
   type: argon2.argon2id,
@@ -20,4 +21,21 @@ const hashPassword = async (req, res, next) => {
   }
 };
 
-module.exports = { hashPassword };
+const verifyToken = (req, res, next) => {
+  try {
+    const token = req.cookies?.auth_token;
+
+    if (!token) {
+      res.sendStatus(403);
+      return;
+    }
+
+    req.auth = jwt.verify(token, process.env.APP_SECRET);
+
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { hashPassword, verifyToken };
