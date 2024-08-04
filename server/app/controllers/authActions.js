@@ -28,7 +28,7 @@ const login = async (req, res, next) => {
         }
       );
 
-      res.cookie("auth_toke", token, {
+      res.cookie("auth_token", token, {
         sameSite: process.env.NODE_ENV !== "development",
         httpOnly: true,
         expires: dayjs().add(30, "days").toDate(),
@@ -46,4 +46,12 @@ const login = async (req, res, next) => {
   }
 };
 
-module.exports = { login };
+const isLogged = ({ res }) => {
+  res.sendStatus(200);
+};
+
+const logout = ({ res }) => {
+  res.clearCookie("auth_token").sendStatus(200);
+};
+
+module.exports = { login, isLogged, logout };
