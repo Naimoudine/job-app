@@ -6,7 +6,7 @@
   }
 
   #root {
-    @apply w-screen h-full;
+    @apply w-screen h-full overflow-x-hidden;
   }
 
   h1 {

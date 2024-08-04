@@ -9,6 +9,18 @@ const browse = async (req, res, next) => {
   }
 };
 
+const readById = async (req, res, next) => {
+  try {
+    const user = await tables.users.readById(req.params.id);
+    if (!user) {
+      res.status(409).json({ message: "No user found" });
+    }
+    res.json(user);
+  } catch (error) {
+    next(error);
+  }
+};
+
 const add = async (req, res, next) => {
   try {
     const userExists = await tables.users.readByEmail(req.body.email);
@@ -29,4 +41,4 @@ const add = async (req, res, next) => {
   }
 };
 
-module.exports = { browse, add };
+module.exports = { browse, readById, add };

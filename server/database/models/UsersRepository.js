@@ -11,9 +11,17 @@ class UsersRepository {
     return rows;
   }
 
+  async readById(id) {
+    const [rows] = await this.database.query(
+      `select * from ${this.table} where id = ?`,
+      [id]
+    );
+    return rows[0];
+  }
+
   async readByEmail(email) {
     const [rows] = await this.database.query(
-      `select * from user where email = ?`,
+      `select * from ${this.table} where email = ?`,
       [email]
     );
     return rows[0];
