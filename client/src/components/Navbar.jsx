@@ -1,22 +1,39 @@
 import { Link, NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faCircleUser } from "@fortawesome/free-solid-svg-icons";
+import { useAuth } from "../hooks/useAuth";
 
-export default function Navbar({ setIsNavModal }) {
+export default function Navbar({ setIsNavModal, setUserModal }) {
+  const { auth } = useAuth();
+
   return (
-    <nav className="flex justify-between p-4 text-lg">
+    <nav className="flex justify-between px-8 py-4 text-lg shadow-lg">
       <Link to="/">SJH</Link>
       <ul className="hidden sm:flex sm:gap-4">
         <li>
-          <NavLink to="/offers">offers</NavLink>
+          <NavLink to="/offers">Offers</NavLink>
         </li>
         <li>
-          <NavLink>my offers</NavLink>
+          <NavLink>Compagnies</NavLink>
         </li>
+        {auth ? (
+          <li>
+            <NavLink>my offers</NavLink>
+          </li>
+        ) : null}
       </ul>
-      <NavLink className="hidden sm:block" to="/login">
-        Login/Register
-      </NavLink>
+      {auth ? (
+        <button
+          className="hidden p-0 m-0 sm:block"
+          onClick={() => setUserModal((prev) => !prev)}
+        >
+          <FontAwesomeIcon className="text-3xl" icon={faCircleUser} />
+        </button>
+      ) : (
+        <NavLink className="hidden sm:block" to="/signin">
+          SignIn / SignUp
+        </NavLink>
+      )}
       <button
         type="button"
         onClick={() => setIsNavModal(true)}

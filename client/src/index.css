@@ -10,15 +10,15 @@
   }
 
   h1 {
-    @apply text-4xl font-semibold sm:text-6xl;
+    @apply text-4xl font-semibold lg:text-6xl;
   }
 
   h2 {
-    @apply text-2xl font-semibold sm:text-4xl;
+    @apply text-2xl font-semibold lg:text-4xl;
   }
 
   h3 {
-    @apply text-xl font-semibold sm:text-2xl;
+    @apply text-xl font-semibold lg:text-2xl;
   }
 
   button {
@@ -29,7 +29,7 @@
 
 @layer components {
   .wrapper {
-    @apply px-4 py-16 md:max-w-[85rem] md:mx-auto w-full h-full;
+    @apply h-full w-full px-4 py-16 md:max-w-[85rem] md:mx-auto;
   }
 
   .tag {

@@ -1,13 +1,16 @@
 const express = require("express");
 const app = express();
+const cookieParser = require("cookie-parser");
 
 app.use(express.json());
+app.use(cookieParser());
 
 // cors config
 const cors = require("cors");
 app.use(
   cors({
-    origin: [process.env.CLIENT_URL]
+    credentials: true,
+    origin: [process.env.CLIENT_URL],
   })
 );
 
@@ -26,6 +29,6 @@ app.use(logErrors);
 
 const apiRouter = require("./routers/api/router");
 
-app.use("/api", apiRouter)
+app.use("/api", apiRouter);
 
 module.exports = app;
