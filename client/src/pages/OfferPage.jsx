@@ -56,10 +56,10 @@ export default function OfferPage() {
         <h2>Job description</h2>
         <p className="mt-4">{offer.description}</p>
       </section>
-      <section className="mt-6 md:mt-8">
+      <section className="w-full mt-6 md:mt-8">
         <h3>Apply</h3>
         <Form
-          className="w-full p-4 mt-4 bg-gray-200 rounded-lg md:w-[52rem] sm:mt-6"
+          className="w-full p-4 mt-4 bg-gray-200 rounded-lg sm:mt-6"
           method="post"
         >
           <div className="flex flex-col items-center gap-4 sm:flex-row">
