@@ -26,6 +26,14 @@ class UsersRepository {
     );
     return rows.insertId;
   }
+
+  async createApply(userId, offerId) {
+    const [rows] = await this.database.query(
+      `insert into applying (user_id, offer_id) values (?, ?)`,
+      [userId, offerId]
+    );
+    return rows.insertId;
+  }
 }
 
 module.exports = UsersRepository;

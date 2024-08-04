@@ -2,11 +2,11 @@
 
 @layer base {
   body {
-    @apply w-screen h-screen;
+    @apply w-screen h-screen overflow-x-hidden;
   }
 
   #root {
-    @apply w-screen h-full;
+    @apply w-screen h-screen;
   }
 
   h1 {
@@ -34,6 +34,10 @@
 
   .tag {
     @apply px-2 py-1 bg-gray-100 rounded-lg;
+  }
+
+  .applyFormInput {
+    @apply w-full px-4 py-2 rounded-lg sm:w-1/2;
   }
 }
 @tailwind utilities;

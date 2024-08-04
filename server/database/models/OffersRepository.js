@@ -10,7 +10,15 @@ class OffersRepository {
     const [rows] = await this.database.query(
       `select * from ${this.table}`
     ); 
-    return rows
+    return rows;
+  }
+
+  async readById(id) {
+    const [rows] = await this.database.query(
+      `select * from ${this.table} where id = ?`,
+      [id]
+    );
+    return rows[0];
   }
 }
 

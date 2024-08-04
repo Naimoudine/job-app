@@ -5,9 +5,10 @@ const router = express.Router();
 const { hashPassword } = require("../../../services/auth");
 
 // controllers
-const { browse, add } = require("../../../controllers/userActions");
+const { browse, addApply, add } = require("../../../controllers/userActions");
 
-router.get("/", browse);
+router.get("", browse);
+router.post("/:userId/applications/:offerId", addApply);
 router.post("/", hashPassword, add);
 
 module.exports = router;

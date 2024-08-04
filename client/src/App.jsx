@@ -1,7 +1,8 @@
+import { useState } from "react";
 import { Outlet } from "react-router-dom";
+import 'react-toastify/dist/ReactToastify.css';
 import Header from "./components/Header";
 import NavModal from "./components/NavModal";
-import { useState } from "react";
 
 function App() {
   const [isNavModal, setIsNavModal] = useState(false);

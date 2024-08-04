@@ -9,6 +9,21 @@ const browse = async (req, res, next) => {
   }
 };
 
+const addApply = async (req, res, next) => {
+  try {
+    const insertedId = await tables.users.createApply(
+      req.params.userId,
+      req.params.offerId
+    );
+    if (!insertedId) {
+      throw new Error("error while creating job application");
+    }
+    res.json(insertedId);
+  } catch (error) {
+    next(error);
+  }
+};
+
 const add = async (req, res, next) => {
   try {
     const userExists = await tables.users.readByEmail(req.body.email);
@@ -29,4 +44,4 @@ const add = async (req, res, next) => {
   }
 };
 
-module.exports = { browse, add };
+module.exports = { browse, add, addApply };
