@@ -52,7 +52,7 @@ const router = createBrowserRouter([
         loader: offersLoader,
       },
       protectedRoute({
-        path: "/profil",
+        path: "/profile",
         element: <ProfilePage />,
         loader: profileLoader,
       }),

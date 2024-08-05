@@ -1,25 +1,31 @@
 import { useState } from "react";
-import { useAuth } from "../hooks/useAuth";
 import ProfileInfos from "../components/profile/ProfileInfos";
 import { useLoaderData } from "react-router-dom";
+import ApplicationsInfos from "../components/profile/ApplicationsInfos";
 
 export const loader = async () => {
-  const user = JSON.parse(localStorage.getItem("user"));
+  const currUser = JSON.parse(localStorage.getItem("user"));
 
   try {
-    const response = await fetch(
-      `${import.meta.env.VITE_API_URL}/users/${user.id}`,
-      {
+    const [userData, applicationsData] = await Promise.all([
+      fetch(`${import.meta.env.VITE_API_URL}/users/${currUser.id}`, {
         credentials: "include",
-      }
-    );
-    const data = await response.json();
-    if (!response.ok) {
-      throw new Error(
-        data?.message || "unknow error while getting user informations"
-      );
+      }),
+      fetch(
+        `${import.meta.env.VITE_API_URL}/users/${currUser.id}/applications`,
+        {
+          credentials: "include",
+        }
+      ),
+    ]);
+    if (!userData.ok || !applicationsData.ok) {
+      throw new Error("unknow error while getting data");
     }
-    return data;
+    const [user, applications] = await Promise.all([
+      userData.json(),
+      applicationsData.json(),
+    ]);
+    return { user, applications };
   } catch (error) {
     throw new Error(error.message);
   }
@@ -28,7 +34,7 @@ export const loader = async () => {
 export default function ProfilePage() {
   const [displayedSection, setDisplayedSection] = useState("Profile");
 
-  const user = useLoaderData();
+  const { user, applications } = useLoaderData();
 
   return (
     <div className="wrapper">
@@ -82,7 +88,7 @@ export default function ProfilePage() {
           {displayedSection === "Profile" ? (
             <ProfileInfos user={user} />
           ) : displayedSection === "Applied" ? (
-            "applied"
+            <ApplicationsInfos applications={applications} />
           ) : (
             "bookmarks"
           )}
