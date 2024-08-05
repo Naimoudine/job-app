@@ -3,6 +3,7 @@ import {
   Link,
   useActionData,
   useNavigate,
+  useNavigation,
   useRouteError,
 } from "react-router-dom";
 import photo from "../assets/images/desk.avif";
@@ -52,6 +53,9 @@ export default function SignIn() {
   const actionData = useActionData();
   const navigate = useNavigate();
   const error = useRouteError();
+  const navigation = useNavigation();
+  const isSubmitting = navigation.state === "submitting";
+
   const { setAuth } = useAuth();
 
   useEffect(() => {
@@ -103,10 +107,11 @@ export default function SignIn() {
               />
             </label>
             <button
-              className="py-3 rounded-lg bg-zinc-900 text-neutral-100"
+              className="py-3 rounded-lg bg-zinc-900 text-neutral-100 disabled:bg-zinc-900/60"
               type="submit"
+              disabled={isSubmitting}
             >
-              SignIn
+              {isSubmitting ? "Signing in..." : "Sign In"}
             </button>
           </Form>
         </section>

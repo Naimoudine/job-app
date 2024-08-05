@@ -1,5 +1,6 @@
 import { Form, useLoaderData } from "react-router-dom";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { ToastContainer } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import OfferCard from "../components/OfferCard";
 
@@ -18,7 +19,6 @@ export const loader = async () => {
 
 export default function OffersPage() {
   const offers = useLoaderData();
-
   return (
     <div className="wrapper">
       <section>
@@ -60,6 +60,7 @@ export default function OffersPage() {
             offers.map((offer) => <OfferCard key={offer.id} offer={offer} />)}
         </div>
       </section>
+      <ToastContainer />
     </div>
   );
 }

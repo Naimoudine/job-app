@@ -9,4 +9,16 @@ const browse = async (req, res, next) => {
   }
 }
 
-module.exports = {browse}
+const read = async (req, res, next) => {
+  try {
+    const offer = await tables.offers.readById(req.params.id);
+    res.json(offer);
+  } catch (error) {
+    next(error)
+  }
+}
+
+module.exports = {
+  browse,
+  read
+}

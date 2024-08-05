@@ -14,8 +14,35 @@ const readById = async (req, res, next) => {
     const user = await tables.users.readById(req.params.id);
     if (!user) {
       res.status(409).json({ message: "No user found" });
+      return;
     }
+
     res.json(user);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const readApplications = async (req, res, next) => {
+  try {
+    const applied = await tables.users.readApplications(req.params.id);
+    if (!applied) {
+      res.status(404).json({ message: "No applications found" });
+    }
+    res.json(applied);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const addApply = async (req, res, next) => {
+  try {
+    const insertedId = await tables.users.createApply(
+      req.params.userId,
+      req.params.offerId,
+      req.file.path
+    );
+    res.status(201).json(insertedId);
   } catch (error) {
     next(error);
   }
@@ -41,4 +68,4 @@ const add = async (req, res, next) => {
   }
 };
 
-module.exports = { browse, readById, add };
+module.exports = { browse, readById, readApplications, add, addApply };

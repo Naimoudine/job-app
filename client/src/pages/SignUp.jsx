@@ -1,4 +1,10 @@
-import { Form, Link, redirect, useRouteError } from "react-router-dom";
+import {
+  Form,
+  Link,
+  redirect,
+  useRouteError,
+  useNavigation,
+} from "react-router-dom";
 import photo from "../assets/images/desk.avif";
 
 export const action = async ({ request }) => {
@@ -24,14 +30,16 @@ export const action = async ({ request }) => {
     if (response.status !== 201) {
       throw new Error(data.message || "Unknown Error while creating user");
     }
-    return redirect("/signIp");
+    return redirect("/signIn");
   } catch (error) {
     throw new Error(error.message);
   }
 };
 
-export default function SignIn() {
+export default function SignUp() {
   const error = useRouteError();
+  const navigation = useNavigation();
+  const isSubmitting = navigation.state === "submitting";
 
   return (
     <div className="flex items-center w-full h-full">
@@ -95,10 +103,10 @@ export default function SignIn() {
               />
             </label>
             <button
-              className="py-3 rounded-lg bg-zinc-900 text-neutral-100"
+              className="py-3 rounded-lg bg-zinc-900 text-neutral-100 disabled:bg-zinc-900/60"
               type="submit"
             >
-              SignIn
+              {isSubmitting ? "Signing up..." : "Sign up"}
             </button>
           </Form>
         </section>

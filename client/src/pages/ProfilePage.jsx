@@ -84,7 +84,7 @@ export default function ProfilePage() {
             </li>
           </ul>
         </nav>
-        <div className="w-full mt-6">
+        <div className="w-full">
           {displayedSection === "Profile" ? (
             <ProfileInfos user={user} />
           ) : displayedSection === "Applied" ? (

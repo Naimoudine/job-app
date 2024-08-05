@@ -1,9 +1,8 @@
 import React from "react";
 
 export default function ProfileInfos({ user }) {
-  console.table(user);
   return (
-    <div className="w-full">
+    <div className="w-full mt-6">
       <div>
         <p className="font-semibold">{user?.firstname}</p>
         <button>Change your firstname</button>
