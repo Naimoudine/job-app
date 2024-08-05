@@ -2,13 +2,22 @@ const express = require("express");
 const router = express.Router();
 
 // middleware
-const { hashPassword } = require("../../../services/auth");
+const { hashPassword, verifyToken } = require("../../../services/auth");
+const multerUpload = require("../../../services/multer");
 
 // controllers
-const { browse, addApply, add } = require("../../../controllers/userActions");
+const {
+  browse,
+  readById,
+  readApplications,
+  addApply,
+  add,
+} = require("../../../controllers/userActions");
 
 router.get("", browse);
-router.post("/:userId/applications/:offerId", addApply);
+router.get("/:id", readById);
+router.get("/:id/applications", readApplications);
+router.post("/:userId/applications/:offerId", multerUpload, addApply);
 router.post("/", hashPassword, add);
 
 module.exports = router;

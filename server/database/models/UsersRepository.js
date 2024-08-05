@@ -11,12 +11,30 @@ class UsersRepository {
     return rows;
   }
 
+  async readById(id) {
+    const [rows] = await this.database.query(
+      `select * from ${this.table} where id = ?`,
+      [id]
+    );
+    return rows[0];
+  }
+
   async readByEmail(email) {
     const [rows] = await this.database.query(
       `select * from user where email = ?`,
       [email]
     );
     return rows[0];
+  }
+
+  async readApplications(userId) {
+    const [rows] = await this.database.query(
+      `select o.*, o.id as offerId from applying as a
+      join offer o on o.id = a.offer_id
+      where user_id = ?`,
+      [userId]
+    );
+    return rows;
   }
 
   async create(user) {
@@ -27,10 +45,10 @@ class UsersRepository {
     return rows.insertId;
   }
 
-  async createApply(userId, offerId) {
+  async createApply(userId, offerId, cv) {
     const [rows] = await this.database.query(
-      `insert into applying (user_id, offer_id) values (?, ?)`,
-      [userId, offerId]
+      `insert ignore into applying (user_id, offer_id, cv) values (?, ?, ?)`,
+      [userId, offerId, cv]
     );
     return rows.insertId;
   }
