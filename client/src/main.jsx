@@ -10,7 +10,10 @@ import "./index.css";
 import App from "./App.jsx";
 import HomePage from "./pages/HomePage.jsx";
 import OffersPage, { loader as offersLoader } from "./pages/OffersPage.jsx";
-import OfferPage, { loader as offerLoader } from "./pages/OfferPage.jsx";
+import OfferPage, {
+  loader as offerLoader,
+  action as offerAction,
+} from "./pages/OfferPage.jsx";
 import SignIn, { action as signInAction } from "./pages/SignIn.jsx";
 import SignUp, { action as signUpAction } from "./pages/SignUp.jsx";
 import { AuthProvider } from "./hooks/useAuth.jsx";
@@ -52,6 +55,7 @@ const router = createBrowserRouter([
         path: "/offers/:id",
         element: <OfferPage />,
         loader: offerLoader,
+        action: offerAction,
       },
     ],
   },

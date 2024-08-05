@@ -9,16 +9,40 @@ const browse = async (req, res, next) => {
   }
 };
 
+const readById = async (req, res, next) => {
+  try {
+    const user = await tables.users.readById(req.params.id);
+    if (!user) {
+      res.status(409).json({ message: "No user found" });
+      return;
+    }
+
+    res.json(user);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const readApplications = async (req, res, next) => {
+  try {
+    const applied = await tables.users.readApplications(req.params.id);
+    if (!applied) {
+      res.status(404).json({ message: "No applications found" });
+    }
+    res.json(applied);
+  } catch (error) {
+    next(error);
+  }
+};
+
 const addApply = async (req, res, next) => {
   try {
     const insertedId = await tables.users.createApply(
       req.params.userId,
-      req.params.offerId
+      req.params.offerId,
+      req.file.path
     );
-    if (!insertedId) {
-      throw new Error("error while creating job application");
-    }
-    res.json(insertedId);
+    res.status(201).json(insertedId);
   } catch (error) {
     next(error);
   }
@@ -44,4 +68,4 @@ const add = async (req, res, next) => {
   }
 };
 
-module.exports = { browse, add, addApply };
+module.exports = { browse, readById, readApplications, add, addApply };
