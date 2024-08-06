@@ -68,7 +68,7 @@ export default function SignIn() {
   return (
     <div className="flex items-center w-full h-full">
       <div className="w-full h-full px-16 py-4 md:w-1/2">
-        <p>SJH</p>
+        <Link to="/">SJH</Link>
         <section className="mt-16">
           <h1>Welcome back</h1>
           <p className="mt-8">

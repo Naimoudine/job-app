@@ -1,4 +1,4 @@
-import { Link, useRevalidator } from "react-router-dom";
+import { Link, useNavigate, useRevalidator } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { faBookmark } from "@fortawesome/free-solid-svg-icons";
 import { faBookmark as faBookmarkOutline } from "@fortawesome/free-regular-svg-icons";
@@ -9,6 +9,7 @@ export default function OfferCard({ offer, bookmarks }) {
   const [bookmarked, setBookmarked] = useState(false);
 
   const { auth } = useAuth();
+  const navigate = useNavigate();
 
   const revalidator = useRevalidator();
 
@@ -23,20 +24,24 @@ export default function OfferCard({ offer, bookmarks }) {
 
   const handleAddBookmark = async () => {
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/users/${auth.id}/bookmarks/${
-          offer.id
-        }`,
-        {
-          method: "post",
-          credentials: "include",
+      if (auth) {
+        const response = await fetch(
+          `${import.meta.env.VITE_API_URL}/users/${auth.id}/bookmarks/${
+            offer.id
+          }`,
+          {
+            method: "post",
+            credentials: "include",
+          }
+        );
+        if (response.status !== 201) {
+          throw new Error("Error while bookmarking offer");
         }
-      );
-      if (response.status !== 201) {
-        throw new Error("Error while bookmarking offer");
+        setBookmarked(true);
+        return revalidator.revalidate();
+      } else {
+        navigate("/signin");
       }
-      setBookmarked(true);
-      return revalidator.revalidate();
     } catch (error) {
       throw new Error(error.message);
     }
