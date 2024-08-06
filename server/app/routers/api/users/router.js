@@ -10,14 +10,20 @@ const {
   browse,
   readById,
   readApplications,
+  readBoomarks,
   addApply,
   add,
+  addBookmark,
+  destroyBookmark,
 } = require("../../../controllers/userActions");
 
 router.get("", browse);
-router.get("/:id", readById);
-router.get("/:id/applications", readApplications);
+router.get("/:userId", readById);
+router.get("/:userId/applications", readApplications);
+router.get("/:userId/bookmarks", readBoomarks);
 router.post("/:userId/applications/:offerId", multerUpload, addApply);
+router.post("/:userId/bookmarks/:offerId", addBookmark);
 router.post("/", hashPassword, add);
+router.delete("/:userId/bookmarks/:offerId", destroyBookmark);
 
 module.exports = router;

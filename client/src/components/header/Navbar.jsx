@@ -1,13 +1,13 @@
 import { Link, NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faCircleUser } from "@fortawesome/free-solid-svg-icons";
-import { useAuth } from "../hooks/useAuth";
+import { useAuth } from "../../hooks/useAuth";
 
 export default function Navbar({ setIsNavModal, setUserModal }) {
   const { auth } = useAuth();
 
   return (
-    <nav className="flex justify-between px-8 py-4 text-lg shadow-lg">
+    <nav className="sticky flex justify-between px-8 py-4 text-lg shadow-lg">
       <Link to="/">SJH</Link>
       <ul className="hidden sm:flex sm:gap-4">
         <li>
@@ -16,11 +16,6 @@ export default function Navbar({ setIsNavModal, setUserModal }) {
         <li>
           <NavLink>Compagnies</NavLink>
         </li>
-        {auth ? (
-          <li>
-            <NavLink>my offers</NavLink>
-          </li>
-        ) : null}
       </ul>
       {auth ? (
         <button

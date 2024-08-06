@@ -11,7 +11,7 @@ const browse = async (req, res, next) => {
 
 const readById = async (req, res, next) => {
   try {
-    const user = await tables.users.readById(req.params.id);
+    const user = await tables.users.readById(req.params.userId);
     if (!user) {
       res.status(409).json({ message: "No user found" });
       return;
@@ -25,11 +25,23 @@ const readById = async (req, res, next) => {
 
 const readApplications = async (req, res, next) => {
   try {
-    const applied = await tables.users.readApplications(req.params.id);
-    if (!applied) {
+    const applications = await tables.users.readApplications(req.params.userId);
+    if (!applications) {
       res.status(404).json({ message: "No applications found" });
     }
-    res.json(applied);
+    res.json(applications);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const readBoomarks = async (req, res, next) => {
+  try {
+    const bookmarks = await tables.users.readBookmarks(req.params.userId);
+    if (!bookmarks) {
+      res.status(404).json({ message: "No bookmarks found" });
+    }
+    res.json(bookmarks);
   } catch (error) {
     next(error);
   }
@@ -43,6 +55,18 @@ const addApply = async (req, res, next) => {
       req.file.path
     );
     res.status(201).json(insertedId);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const addBookmark = async (req, res, next) => {
+  try {
+    const insertId = await tables.users.createBookmark(
+      req.params.userId,
+      req.params.offerId
+    );
+    res.status(201).json(insertId);
   } catch (error) {
     next(error);
   }
@@ -68,4 +92,26 @@ const add = async (req, res, next) => {
   }
 };
 
-module.exports = { browse, readById, readApplications, add, addApply };
+const destroyBookmark = async (req, res, next) => {
+  try {
+    const affectedRows = await tables.users.deleteBookmark(
+      req.params.userId,
+      req.params.offerId
+    );
+
+    res.status(204).json(affectedRows);
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = {
+  browse,
+  readById,
+  readApplications,
+  readBoomarks,
+  add,
+  addApply,
+  addBookmark,
+  destroyBookmark,
+};

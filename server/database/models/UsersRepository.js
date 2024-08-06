@@ -21,7 +21,7 @@ class UsersRepository {
 
   async readByEmail(email) {
     const [rows] = await this.database.query(
-      `select * from user where email = ?`,
+      `select * from ${this.table} where email = ?`,
       [email]
     );
     return rows[0];
@@ -31,6 +31,16 @@ class UsersRepository {
     const [rows] = await this.database.query(
       `select o.*, o.id as offerId from applying as a
       join offer o on o.id = a.offer_id
+      where user_id = ?`,
+      [userId]
+    );
+    return rows;
+  }
+
+  async readBookmarks(userId) {
+    const [rows] = await this.database.query(
+      `select o.*, o.id as offerId from bookmarking as b
+      join offer o on o.id = b.offer_id
       where user_id = ?`,
       [userId]
     );
@@ -51,6 +61,22 @@ class UsersRepository {
       [userId, offerId, cv]
     );
     return rows.insertId;
+  }
+
+  async createBookmark(userId, offerId) {
+    const [rows] = await this.database.query(
+      `insert ignore into bookmarking (user_id, offer_id) values (?, ?)`,
+      [userId, offerId]
+    );
+    return rows.insertId;
+  }
+
+  async deleteBookmark(userId, offerId) {
+    const [rows] = await this.database.query(
+      `delete from bookmarking where user_id = ? and offer_id = ?`,
+      [userId, offerId]
+    );
+    return rows.affectedRows;
   }
 }
 

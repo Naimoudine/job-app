@@ -5,20 +5,40 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import OfferCard from "../components/OfferCard";
 
 export const loader = async () => {
+  const user = JSON.parse(localStorage.getItem("user"));
   try {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/offers`);
-    const data = await response.json();
-    if (!response.ok) {
-      throw new Error("error while fetching offers");
+    if (user) {
+      const [offersData, bookmarksData] = await Promise.all([
+        fetch(`${import.meta.env.VITE_API_URL}/offers`),
+        fetch(`${import.meta.env.VITE_API_URL}/users/${user.id}/bookmarks`),
+      ]);
+
+      if (!offersData.ok || !bookmarksData.ok) {
+        throw new Error("error while fetching data");
+      }
+      const [offers, bookmarks] = await Promise.all([
+        offersData.json(),
+        bookmarksData.json(),
+      ]);
+
+      return { offers, bookmarks };
+    } else {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/offers`);
+      const offers = await response.json();
+
+      if (!response.ok) {
+        throw new Error("error while fetching offers");
+      }
+
+      return { offers };
     }
-    return data;
   } catch (error) {
     throw new Error(error.message);
   }
 };
 
 export default function OffersPage() {
-  const offers = useLoaderData();
+  const { offers, bookmarks } = useLoaderData();
   return (
     <div className="wrapper">
       <section>
@@ -57,7 +77,13 @@ export default function OffersPage() {
         <h2>Offers</h2>
         <div className="flex flex-col gap-6 mt-8 sm:flex-row sm:flex-wrap">
           {offers &&
-            offers.map((offer) => <OfferCard key={offer.id} offer={offer} />)}
+            offers.map((offer) => (
+              <OfferCard
+                key={offer.id}
+                offer={offer}
+                bookmarks={bookmarks || []}
+              />
+            ))}
         </div>
       </section>
       <ToastContainer />
