@@ -2,12 +2,13 @@ import { useState } from "react";
 import ProfileInfos from "../components/profile/ProfileInfos";
 import { useLoaderData } from "react-router-dom";
 import ApplicationsInfos from "../components/profile/ApplicationsInfos";
+import BookmarksInfos from "../components/profile/BookmarksInfos";
 
 export const loader = async () => {
   const currUser = JSON.parse(localStorage.getItem("user"));
 
   try {
-    const [userData, applicationsData] = await Promise.all([
+    const [userData, applicationsData, bookmarksData] = await Promise.all([
       fetch(`${import.meta.env.VITE_API_URL}/users/${currUser.id}`, {
         credentials: "include",
       }),
@@ -17,15 +18,19 @@ export const loader = async () => {
           credentials: "include",
         }
       ),
+      fetch(`${import.meta.env.VITE_API_URL}/users/${currUser.id}/bookmarks`, {
+        credentials: "include",
+      }),
     ]);
-    if (!userData.ok || !applicationsData.ok) {
+    if (!userData.ok || !applicationsData.ok || !bookmarksData.ok) {
       throw new Error("unknow error while getting data");
     }
-    const [user, applications] = await Promise.all([
+    const [user, applications, bookmarks] = await Promise.all([
       userData.json(),
       applicationsData.json(),
+      bookmarksData.json(),
     ]);
-    return { user, applications };
+    return { user, applications, bookmarks };
   } catch (error) {
     throw new Error(error.message);
   }
@@ -34,7 +39,7 @@ export const loader = async () => {
 export default function ProfilePage() {
   const [displayedSection, setDisplayedSection] = useState("Profile");
 
-  const { user, applications } = useLoaderData();
+  const { user, applications, bookmarks } = useLoaderData();
 
   return (
     <div className="wrapper">
@@ -90,7 +95,7 @@ export default function ProfilePage() {
           ) : displayedSection === "Applied" ? (
             <ApplicationsInfos applications={applications} />
           ) : (
-            "bookmarks"
+            <BookmarksInfos bookmarks={bookmarks} />
           )}
         </div>
       </div>

@@ -51,7 +51,7 @@ create table bookmarking (
   foreign key(user_id) references user(id) on delete cascade,
   foreign key(offer_id) references offer(id) on delete cascade,
   created_at timestamp default current_timestamp()
-)
+);
 
 
 INSERT INTO company (name, description, location, capital, creation_date)

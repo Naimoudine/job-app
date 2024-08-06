@@ -62,6 +62,22 @@ class UsersRepository {
     );
     return rows.insertId;
   }
+
+  async createBookmark(userId, offerId) {
+    const [rows] = await this.database.query(
+      `insert ignore into bookmarking (user_id, offer_id) values (?, ?)`,
+      [userId, offerId]
+    );
+    return rows.insertId;
+  }
+
+  async deleteBookmark(userId, offerId) {
+    const [rows] = await this.database.query(
+      `delete from bookmarking where user_id = ? and offer_id = ?`,
+      [userId, offerId]
+    );
+    return rows.affectedRows;
+  }
 }
 
 module.exports = UsersRepository;
