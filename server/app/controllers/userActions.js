@@ -25,11 +25,23 @@ const readById = async (req, res, next) => {
 
 const readApplications = async (req, res, next) => {
   try {
-    const applied = await tables.users.readApplications(req.params.id);
-    if (!applied) {
+    const applications = await tables.users.readApplications(req.params.id);
+    if (!applications) {
       res.status(404).json({ message: "No applications found" });
     }
-    res.json(applied);
+    res.json(applications);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const readBoomarks = async (req, res, next) => {
+  try {
+    const bookmarks = await tables.users.readBookmarks(req.params.id);
+    if (!bookmarks) {
+      res.status(404).json({ message: "No bookmarks found" });
+    }
+    res.json(bookmarks);
   } catch (error) {
     next(error);
   }
@@ -68,4 +80,11 @@ const add = async (req, res, next) => {
   }
 };
 
-module.exports = { browse, readById, readApplications, add, addApply };
+module.exports = {
+  browse,
+  readById,
+  readApplications,
+  readBoomarks,
+  add,
+  addApply,
+};

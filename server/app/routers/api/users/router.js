@@ -10,6 +10,7 @@ const {
   browse,
   readById,
   readApplications,
+  readBoomarks,
   addApply,
   add,
 } = require("../../../controllers/userActions");
@@ -17,6 +18,7 @@ const {
 router.get("", browse);
 router.get("/:id", readById);
 router.get("/:id/applications", readApplications);
+router.get("/:id/bookmarks", readBoomarks);
 router.post("/:userId/applications/:offerId", multerUpload, addApply);
 router.post("/", hashPassword, add);
 

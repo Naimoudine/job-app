@@ -44,6 +44,15 @@ create table applying (
   created_at timestamp default current_timestamp()
 );
 
+create table bookmarking (
+  primary key (user_id, offer_id),
+  user_id int unsigned not null, 
+  offer_id int unsigned not null,
+  foreign key(user_id) references user(id) on delete cascade,
+  foreign key(offer_id) references offer(id) on delete cascade,
+  created_at timestamp default current_timestamp()
+)
+
 
 INSERT INTO company (name, description, location, capital, creation_date)
 VALUES

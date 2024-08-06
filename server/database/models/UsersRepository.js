@@ -37,6 +37,16 @@ class UsersRepository {
     return rows;
   }
 
+  async readBookmarks(userId) {
+    const [rows] = await this.database.query(
+      `select o.*, o.id as offerId from bookmarking as b
+      join offer o on o.id = b.offer_id
+      where user_id = ?`,
+      [userId]
+    );
+    return rows;
+  }
+
   async create(user) {
     const [rows] = await this.database.query(
       `insert into ${this.table} (firstname, lastname, email, hashed_password) values (?, ?, ?, ?)`,
