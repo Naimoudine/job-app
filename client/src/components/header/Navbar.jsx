@@ -16,11 +16,6 @@ export default function Navbar({ setIsNavModal, setUserModal }) {
         <li>
           <NavLink>Compagnies</NavLink>
         </li>
-        {auth ? (
-          <li>
-            <NavLink>my offers</NavLink>
-          </li>
-        ) : null}
       </ul>
       {auth ? (
         <button
