@@ -21,7 +21,7 @@ class UsersRepository {
 
   async readByEmail(email) {
     const [rows] = await this.database.query(
-      `select * from user where email = ?`,
+      `select * from ${this.table} where email = ?`,
       [email]
     );
     return rows[0];
