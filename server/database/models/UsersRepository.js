@@ -71,6 +71,14 @@ class UsersRepository {
     return rows.insertId;
   }
 
+  async deleteApplication(userId, offerId) {
+    const [rows] = await this.database.query(
+      `delete from applying where user_id = ? and offer_id = ?`,
+      [userId, offerId]
+    );
+    return rows.affectedRows;
+  }
+
   async deleteBookmark(userId, offerId) {
     const [rows] = await this.database.query(
       `delete from bookmarking where user_id = ? and offer_id = ?`,

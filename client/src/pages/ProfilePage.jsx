@@ -3,6 +3,7 @@ import ProfileInfos from "../components/profile/ProfileInfos";
 import { useLoaderData } from "react-router-dom";
 import ApplicationsInfos from "../components/profile/ApplicationsInfos";
 import BookmarksInfos from "../components/profile/BookmarksInfos";
+import CancelModal from "../components/profile/CancelModal";
 
 export const loader = async () => {
   const currUser = JSON.parse(localStorage.getItem("user"));
@@ -50,7 +51,7 @@ export default function ProfilePage() {
       </section>
       <div className="mt-6">
         <nav>
-          <ul className="flex items-center gap-4 pb-4 border-b border-gray-100">
+          <ul className="flex items-center gap-4 pb-4 border-b border-gray-100 ">
             <li className="relative">
               <button
                 className={

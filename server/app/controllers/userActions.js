@@ -92,6 +92,18 @@ const add = async (req, res, next) => {
   }
 };
 
+const destroyApplication = async (req, res, next) => {
+  try {
+    const affectedRows = await tables.users.deleteApplication(
+      req.params.userId,
+      req.params.offerId
+    );
+    res.status(204).json(affectedRows);
+  } catch (error) {
+    next(error);
+  }
+};
+
 const destroyBookmark = async (req, res, next) => {
   try {
     const affectedRows = await tables.users.deleteBookmark(
@@ -113,5 +125,6 @@ module.exports = {
   add,
   addApply,
   addBookmark,
+  destroyApplication,
   destroyBookmark,
 };
