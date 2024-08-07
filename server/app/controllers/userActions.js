@@ -47,6 +47,18 @@ const readBoomarks = async (req, res, next) => {
   }
 };
 
+const editPicture = async (req, res, next) => {
+  try {
+    const affectedRows = await tables.users.updatePicture(
+      req.file.path,
+      req.params.userId
+    );
+    res.status(204).json(affectedRows);
+  } catch (error) {
+    next(error);
+  }
+};
+
 const addApply = async (req, res, next) => {
   try {
     const insertedId = await tables.users.createApply(
@@ -122,6 +134,7 @@ module.exports = {
   readById,
   readApplications,
   readBoomarks,
+  editPicture,
   add,
   addApply,
   addBookmark,

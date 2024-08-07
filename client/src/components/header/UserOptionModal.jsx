@@ -30,7 +30,9 @@ export default function UserOptionModal({ userModal, setUserModal }) {
     >
       <ul>
         <li className="px-4 py-2 hover:bg-gray-300">
-          <NavLink to="/profile">Profile</NavLink>
+          <NavLink to="/profile" onClick={() => setUserModal(false)}>
+            Profile
+          </NavLink>
         </li>
         <li className="px-4 py-2 hover:bg-gray-300">
           <button className="p-0 m-0" onClick={() => handleLogout()}>
