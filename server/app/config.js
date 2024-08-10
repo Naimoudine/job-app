@@ -1,16 +1,19 @@
 const express = require("express");
-const app = express();
 const cookieParser = require("cookie-parser");
+const path = require("path");
+
+const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(express.static(path.join(__dirname + "../../public")));
 
 // cors config
 const cors = require("cors");
 app.use(
   cors({
     credentials: true,
-    origin: [process.env.CLIENT_URL],
+    origin: [process.env.CLIENT_URL, process.env.CLIENT_NETWORK],
   })
 );
 

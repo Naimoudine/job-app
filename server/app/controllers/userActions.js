@@ -47,6 +47,32 @@ const readBoomarks = async (req, res, next) => {
   }
 };
 
+const edit = async (req, res, next) => {
+  console.log("ici");
+  try {
+    const uploadDest = `${process.env.HOST_URL}/${req.file.filename}`;
+    req.body.cv = uploadDest;
+    const affectedRows = await tables.users.update(req.body, req.params.userId);
+    res.status(204).json(affectedRows);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const editPicture = async (req, res, next) => {
+  try {
+    const uploadDest = `${process.env.HOST_URL}/images/`;
+    const picture = uploadDest + req.file.filename;
+    const affectedRows = await tables.users.updatePicture(
+      picture,
+      req.params.userId
+    );
+    res.status(204).json(affectedRows);
+  } catch (error) {
+    next(error);
+  }
+};
+
 const addApply = async (req, res, next) => {
   try {
     const insertedId = await tables.users.createApply(
@@ -122,6 +148,8 @@ module.exports = {
   readById,
   readApplications,
   readBoomarks,
+  edit,
+  editPicture,
   add,
   addApply,
   addBookmark,

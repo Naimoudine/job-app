@@ -6,6 +6,30 @@ class UsersRepository {
     this.database = database;
   }
 
+  async create(user) {
+    const [rows] = await this.database.query(
+      `insert into ${this.table} (firstname, lastname, email, hashed_password) values (?, ?, ?, ?)`,
+      [user.firstname, user.lastname, user.email, user.hashedPassword]
+    );
+    return rows.insertId;
+  }
+
+  async createApply(userId, offerId, cv) {
+    const [rows] = await this.database.query(
+      `insert ignore into applying (user_id, offer_id, cv) values (?, ?, ?)`,
+      [userId, offerId, cv]
+    );
+    return rows.insertId;
+  }
+
+  async createBookmark(userId, offerId) {
+    const [rows] = await this.database.query(
+      `insert ignore into bookmarking (user_id, offer_id) values (?, ?)`,
+      [userId, offerId]
+    );
+    return rows.insertId;
+  }
+
   async readAll() {
     const [rows] = await this.database.query(`select * from ${this.table}`);
     return rows;
@@ -47,28 +71,20 @@ class UsersRepository {
     return rows;
   }
 
-  async create(user) {
+  async update(user, userId) {
     const [rows] = await this.database.query(
-      `insert into ${this.table} (firstname, lastname, email, hashed_password) values (?, ?, ?, ?)`,
-      [user.firstname, user.lastname, user.email, user.hashedPassword]
+      `update ${this.table} set ? where id = ?`,
+      [user, userId]
     );
-    return rows.insertId;
+    return rows.affectedRows;
   }
 
-  async createApply(userId, offerId, cv) {
+  async updatePicture(picture, userId) {
     const [rows] = await this.database.query(
-      `insert ignore into applying (user_id, offer_id, cv) values (?, ?, ?)`,
-      [userId, offerId, cv]
+      `update ${this.table} set picture = ? where id = ?`,
+      [picture, userId]
     );
-    return rows.insertId;
-  }
-
-  async createBookmark(userId, offerId) {
-    const [rows] = await this.database.query(
-      `insert ignore into bookmarking (user_id, offer_id) values (?, ?)`,
-      [userId, offerId]
-    );
-    return rows.insertId;
+    return rows.affectedRows;
   }
 
   async deleteApplication(userId, offerId) {

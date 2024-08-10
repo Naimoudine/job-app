@@ -1,9 +1,12 @@
 import { useState } from "react";
 import ProfileInfos from "../components/profile/ProfileInfos";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useOutletContext } from "react-router-dom";
 import ApplicationsInfos from "../components/profile/ApplicationsInfos";
 import BookmarksInfos from "../components/profile/BookmarksInfos";
 import CancelModal from "../components/profile/CancelModal";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPen } from "@fortawesome/free-solid-svg-icons";
+import ProfilePicModal from "../components/profile/ProfilePicModal";
 
 export const loader = async () => {
   const currUser = JSON.parse(localStorage.getItem("user"));
@@ -41,11 +44,27 @@ export default function ProfilePage() {
   const [displayedSection, setDisplayedSection] = useState("Profile");
 
   const { user, applications, bookmarks } = useLoaderData();
+  const { setShowPicModal } = useOutletContext();
+
+  console.log(user);
 
   return (
     <div className="wrapper">
       <section>
-        <img className="w-24 h-24" src={user.avatar} alt="profil picture" />
+        <div className="relative flex items-center justify-center w-24 h-24 bg-gray-200 rounded-full">
+          <button
+            className="absolute z-40 px-2 py-1 m-0 -right-2 top-4 hover:bg-gray-100 hover:rounded-full"
+            type="button"
+            onClick={() => setShowPicModal(true)}
+          >
+            <FontAwesomeIcon icon={faPen} />
+          </button>
+          <img
+            className="w-full h-full rounded-full"
+            src={user.picture}
+            alt="profil picture"
+          />
+        </div>
         <h1 className="mt-4">{`${user?.firstname} ${user?.lastname}`}</h1>
         <p className="mt-6">{user?.email}</p>
       </section>

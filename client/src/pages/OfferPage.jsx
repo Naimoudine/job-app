@@ -10,6 +10,7 @@ import { toast, ToastContainer } from "react-toastify";
 
 export const loader = async ({ params }) => {
   const currUser = JSON.parse(localStorage.getItem("user"));
+  console.log(currUser);
   try {
     if (currUser) {
       const [offerData, userData, applicationsData] = await Promise.all([

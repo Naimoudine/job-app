@@ -25,12 +25,16 @@ export default function UserOptionModal({ userModal, setUserModal }) {
   return (
     <div
       className={
-        userModal ? `absolute bg-gray-100/100 z-60 right-8 top-12` : `hidden`
+        userModal
+          ? `absolute bg-gray-100/100 z-[1000] right-8 top-12`
+          : `hidden`
       }
     >
       <ul>
         <li className="px-4 py-2 hover:bg-gray-300">
-          <NavLink to="/profile">Profile</NavLink>
+          <NavLink to="/profile" onClick={() => setUserModal(false)}>
+            Profile
+          </NavLink>
         </li>
         <li className="px-4 py-2 hover:bg-gray-300">
           <button className="p-0 m-0" onClick={() => handleLogout()}>

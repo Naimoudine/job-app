@@ -3,7 +3,8 @@ const router = express.Router();
 
 // middleware
 const { hashPassword, verifyToken } = require("../../../services/auth");
-const multerUpload = require("../../../services/multer");
+const uploadCv = require("../../../services/uploadCv");
+const uploadPicture = require("../../../services/uploadProfilPic");
 
 // controllers
 const {
@@ -11,6 +12,8 @@ const {
   readById,
   readApplications,
   readBoomarks,
+  edit,
+  editPicture,
   addApply,
   add,
   addBookmark,
@@ -20,9 +23,11 @@ const {
 
 router.get("", browse);
 router.get("/:userId", readById);
+router.put("/:userId/picture", uploadPicture, editPicture);
+router.put("/:userId/profile", uploadCv, edit);
 router.get("/:userId/applications", readApplications);
 router.get("/:userId/bookmarks", readBoomarks);
-router.post("/:userId/applications/:offerId", multerUpload, addApply);
+router.post("/:userId/applications/:offerId", uploadCv, addApply);
 router.post("/:userId/bookmarks/:offerId", addBookmark);
 router.post("/", hashPassword, add);
 router.delete("/:userId/applications/:offerId", destroyApplication);
