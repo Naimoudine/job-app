@@ -16,7 +16,7 @@ export default function ProfilePicModal({ showPicModal, setShowPicModal }) {
 
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/users/${auth.id}`,
+        `${import.meta.env.VITE_API_URL}/users/${auth.id}/picture`,
         {
           method: "put",
           body: formData,

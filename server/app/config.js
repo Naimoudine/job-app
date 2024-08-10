@@ -6,10 +6,7 @@ const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(
-  "/images",
-  express.static(path.join(__dirname + "../../public/images"))
-);
+app.use(express.static(path.join(__dirname + "../../public")));
 
 // cors config
 const cors = require("cors");

@@ -71,9 +71,17 @@ class UsersRepository {
     return rows;
   }
 
+  async update(user, userId) {
+    const [rows] = await this.database.query(
+      `update ${this.table} set ? where id = ?`,
+      [user, userId]
+    );
+    return rows.affectedRows;
+  }
+
   async updatePicture(picture, userId) {
     const [rows] = await this.database.query(
-      `update user set picture = ? where id = ?`,
+      `update ${this.table} set picture = ? where id = ?`,
       [picture, userId]
     );
     return rows.affectedRows;

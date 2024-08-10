@@ -12,6 +12,7 @@ const {
   readById,
   readApplications,
   readBoomarks,
+  edit,
   editPicture,
   addApply,
   add,
@@ -22,7 +23,8 @@ const {
 
 router.get("", browse);
 router.get("/:userId", readById);
-router.put("/:userId", uploadPicture, editPicture);
+router.put("/:userId/picture", uploadPicture, editPicture);
+router.put("/:userId/profile", uploadCv, edit);
 router.get("/:userId/applications", readApplications);
 router.get("/:userId/bookmarks", readBoomarks);
 router.post("/:userId/applications/:offerId", uploadCv, addApply);
