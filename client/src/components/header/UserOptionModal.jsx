@@ -25,7 +25,9 @@ export default function UserOptionModal({ userModal, setUserModal }) {
   return (
     <div
       className={
-        userModal ? `absolute bg-gray-100/100 z-60 right-8 top-12` : `hidden`
+        userModal
+          ? `absolute bg-gray-100/100 z-[1000] right-8 top-12`
+          : `hidden`
       }
     >
       <ul>

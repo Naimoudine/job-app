@@ -60,7 +60,7 @@ export default function ProfilePage() {
             <FontAwesomeIcon icon={faPen} />
           </button>
           <img
-            className="w-full h-full"
+            className="w-full h-full rounded-full"
             src={user.picture}
             alt="profil picture"
           />

@@ -49,8 +49,10 @@ const readBoomarks = async (req, res, next) => {
 
 const editPicture = async (req, res, next) => {
   try {
+    const uploadDest = `${process.env.HOST_URL}/images/`;
+    const picture = uploadDest + req.file.filename;
     const affectedRows = await tables.users.updatePicture(
-      req.file.path,
+      picture,
       req.params.userId
     );
     res.status(204).json(affectedRows);
