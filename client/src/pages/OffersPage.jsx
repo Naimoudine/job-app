@@ -42,7 +42,7 @@ export default function OffersPage() {
   return (
     <div className="wrapper">
       <section>
-        <h1>Find the perfect job for you</h1>
+        <h1>Find the perfect job.</h1>
         <Form className="flex flex-col mt-8 sm:flex-row sm:border-2 sm:border-zinc-900 md:mt-16">
           <div className="sm:w-[90%] sm:px-4 sm:py-2 flex flex-col sm:flex-row gap-4 items-center">
             <FontAwesomeIcon

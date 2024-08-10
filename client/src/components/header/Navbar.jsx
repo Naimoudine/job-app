@@ -14,7 +14,7 @@ export default function Navbar({ setIsNavModal, setUserModal }) {
           <NavLink to="/offers">Offers</NavLink>
         </li>
         <li>
-          <NavLink>Compagnies</NavLink>
+          <NavLink to="/companies">Companies</NavLink>
         </li>
       </ul>
       {auth ? (

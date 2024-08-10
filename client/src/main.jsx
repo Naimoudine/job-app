@@ -8,7 +8,7 @@ import {
 import "./index.css";
 
 import App from "./App.jsx";
-import HomePage from "./pages/HomePage.jsx";
+import HomePage, { loader as homeLoader } from "./pages/HomePage.jsx";
 import OffersPage, { loader as offersLoader } from "./pages/OffersPage.jsx";
 import OfferPage, {
   loader as offerLoader,
@@ -46,6 +46,7 @@ const router = createBrowserRouter([
       {
         path: "",
         element: <HomePage />,
+        loader: homeLoader,
       },
       {
         path: "/offers",
