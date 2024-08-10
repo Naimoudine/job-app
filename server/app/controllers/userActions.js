@@ -52,9 +52,8 @@ const edit = async (req, res, next) => {
   try {
     const uploadDest = `${process.env.HOST_URL}/${req.file.filename}`;
     req.body.cv = uploadDest;
-    console.log(req.body);
-    // const affectedRows = await tables.users.update(req.body, req.params.userId);
-    // res.status(204).json(affectedRows);
+    const affectedRows = await tables.users.update(req.body, req.params.userId);
+    res.status(204).json(affectedRows);
   } catch (error) {
     next(error);
   }

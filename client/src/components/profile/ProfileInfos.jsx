@@ -26,7 +26,7 @@ export default function ProfileInfos({ user }) {
       if (response.status !== 204) {
         throw new Error("error while editing profile informations");
       }
-
+      setEdit(false);
       return revalidator.revalidate();
     } catch (error) {
       throw new Error(error.message);
@@ -88,7 +88,7 @@ export default function ProfileInfos({ user }) {
           {edit ? (
             <input type="file" className=" w-fit" name="file" id="cv" />
           ) : (
-            <p>{user?.cv}</p>
+            <p>{user?.cv.slice(22)}</p>
           )}
         </div>
         {edit ? (
