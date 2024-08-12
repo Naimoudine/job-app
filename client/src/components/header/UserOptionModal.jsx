@@ -1,27 +1,26 @@
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, NavLink } from "react-router-dom";
 
 export default function UserOptionModal({ userModal, setUserModal }) {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleLogout = async () => {
-    localStorage.clear()
+    localStorage.clear();
 
     try {
       const response = await fetch(`${import.meta.env.VITE_API_URL}/logout`, {
-        credentials: 'include',
-      })
+        credentials: "include",
+      });
 
       if (!response.ok) {
-        throw new Error('error while loging out')
+        throw new Error("error while loging out");
       }
 
-      setUserModal(false)
-      navigate(0)
+      setUserModal(false);
+      navigate(0);
+    } catch (error) {
+      throw new Error(error.message);
     }
-    catch (error) {
-      throw new Error(error.message)
-    }
-  }
+  };
 
   return (
     <div
@@ -44,5 +43,5 @@ export default function UserOptionModal({ userModal, setUserModal }) {
         </li>
       </ul>
     </div>
-  )
+  );
 }

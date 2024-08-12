@@ -1,6 +1,10 @@
 import { useState } from "react";
 import { useLoaderData, useOutletContext } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
+import ProfileInfos from "../components/profile/ProfileInfos";
+import ApplicationsInfos from "../components/profile/ApplicationsInfos";
+import BookmarksInfos from "../components/profile/BookmarksInfos";
 
 export async function loader() {
   const currUser = JSON.parse(localStorage.getItem("user"));

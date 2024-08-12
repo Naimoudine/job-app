@@ -1,42 +1,46 @@
-import ReactDOM from 'react-dom/client'
+import React from "react";
+import ReactDOM from "react-dom/client";
 import {
   createBrowserRouter,
+  RouterProvider,
   redirect,
-} from 'react-router-dom'
-import './index.css'
+} from "react-router-dom";
+import { AuthProvider } from "./hooks/useAuth.jsx";
+import "./index.css";
 
-import { loader as homeLoader } from './pages/HomePage.jsx'
-import { loader as offersLoader } from './pages/OffersPage.jsx'
-import {
+import App from "./App.jsx";
+import HomePage, { loader as homeLoader } from "./pages/HomePage.jsx";
+import OffersPage, { loader as offersLoader } from "./pages/OffersPage.jsx";
+import OfferPage, {
   action as offerAction,
   loader as offerLoader,
-} from './pages/OfferPage.jsx'
-import { action as signInAction } from './pages/SignIn.jsx'
-import { action as signUpAction } from './pages/SignUp.jsx'
-import { checkAuth } from './utils/api.js'
-import { loader as profileLoader } from './pages/ProfilePage.jsx'
-import {
+} from "./pages/OfferPage.jsx";
+import SignIn, { action as signInAction } from "./pages/SignIn.jsx";
+import SignUp, { action as signUpAction } from "./pages/SignUp.jsx";
+import { checkAuth } from "./utils/api.js";
+import ProfilePage, { loader as profileLoader } from "./pages/ProfilePage.jsx";
+import CompaniesPage, {
   loader as companiesLoader,
-} from './pages/CompaniesPage.jsx'
-import { loader as companyLoader } from './pages/ComapnyPage.jsx'
+} from "./pages/CompaniesPage.jsx";
+import CompanyPage, { loader as companyLoader } from "./pages/CompanyPage.jsx";
 
 function protectedRoute(routeConfig) {
   return {
     ...routeConfig,
     loader: async (args) => {
-      const isAllowed = await checkAuth()
+      const isAllowed = await checkAuth();
 
       if (!isAllowed) {
-        return redirect('/signin')
+        return redirect("/signin");
       }
 
       if (routeConfig.loader) {
-        return routeConfig.loader(args)
+        return routeConfig.loader(args);
       }
 
-      return null
+      return null;
     },
-  }
+  };
 }
 
 const router = createBrowserRouter([
@@ -44,56 +48,56 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       {
-        path: '',
+        path: "",
         element: <HomePage />,
         loader: homeLoader,
       },
       protectedRoute({
-        path: '/profile',
+        path: "/profile",
         element: <ProfilePage />,
         loader: profileLoader,
       }),
       {
-        path: '/offers',
+        path: "/offers",
         element: <OffersPage />,
         loader: offersLoader,
       },
       {
-        path: '/offers/:id',
+        path: "/offers/:id",
         element: <OfferPage />,
         loader: offerLoader,
         action: offerAction,
       },
       {
-        path: '/companies',
+        path: "/companies",
         element: <CompaniesPage />,
         loader: companiesLoader,
       },
       {
-        path: '/companies/:id',
-        element: <ComapnyPage />,
+        path: "/companies/:id",
+        element: <CompanyPage />,
         loader: companyLoader,
       },
     ],
   },
   {
-    path: '/signin',
+    path: "/signin",
     element: <SignIn />,
     action: signInAction,
     errorElement: <SignIn />,
   },
   {
-    path: '/signup',
+    path: "/signup",
     element: <SignUp />,
     action: signUpAction,
     errorElement: <SignUp />,
   },
-])
+]);
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <AuthProvider>
       <RouterProvider router={router} />
     </AuthProvider>
-  </React.StrictMode>,
-)
+  </React.StrictMode>
+);

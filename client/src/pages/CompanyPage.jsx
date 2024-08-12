@@ -1,4 +1,5 @@
 import { useLoaderData } from "react-router-dom";
+import OfferCard from "../components/OfferCard";
 
 export async function loader({ params }) {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -43,7 +44,7 @@ export async function loader({ params }) {
   }
 }
 
-export default function ComapnyPage() {
+export default function CompanyPage() {
   const { company, offers, bookmarks } = useLoaderData();
 
   return (

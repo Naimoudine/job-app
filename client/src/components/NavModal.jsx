@@ -1,31 +1,31 @@
-import { useNavigate } from 'react-router-dom'
-import { faXmark } from '@fortawesome/free-solid-svg-icons'
-import { useAuth } from '../hooks/useAuth'
+import { useNavigate, NavLink } from "react-router-dom";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { useAuth } from "../hooks/useAuth";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function NavModal({ navModal }) {
-  const { isNavModal, setIsNavModal } = navModal
+  const { isNavModal, setIsNavModal } = navModal;
 
-  const navigate = useNavigate()
-  const { auth } = useAuth()
+  const navigate = useNavigate();
+  const { auth } = useAuth();
 
   const handleLogout = async () => {
-    localStorage.clear()
+    localStorage.clear();
 
     try {
       const response = await fetch(`${import.meta.env.VITE_API_URL}/logout`, {
-        credentials: 'include',
-      })
+        credentials: "include",
+      });
 
       if (!response.ok) {
-        throw new Error('error while loging out')
+        throw new Error("error while loging out");
       }
-      setIsNavModal(false)
-      return navigate(0)
+      setIsNavModal(false);
+      return navigate(0);
+    } catch (error) {
+      throw new Error(error.message);
     }
-    catch (error) {
-      throw new Error(error.message)
-    }
-  }
+  };
 
   return (
     <div
@@ -60,33 +60,29 @@ export default function NavModal({ navModal }) {
           <li>
             <NavLink onClick={() => setIsNavModal(false)}>Companies</NavLink>
           </li>
-          {auth
-            ? (
-                <li>
-                  <NavLink to="/profile" onClick={() => setIsNavModal(false)}>
-                    {auth.firstname}
-                  </NavLink>
-                </li>
-              )
-            : (
-                <li>
-                  <NavLink to="/signIn" onClick={() => setIsNavModal(false)}>
-                    Sign In/Sign up
-                  </NavLink>
-                </li>
-              )}
-          {auth
-            ? (
-                <button
-                  className="p-0 m-0 text-start hover:text-red-600"
-                  onClick={handleLogout}
-                >
-                  Logout
-                </button>
-              )
-            : null}
+          {auth ? (
+            <li>
+              <NavLink to="/profile" onClick={() => setIsNavModal(false)}>
+                {auth.firstname}
+              </NavLink>
+            </li>
+          ) : (
+            <li>
+              <NavLink to="/signIn" onClick={() => setIsNavModal(false)}>
+                Sign In/Sign up
+              </NavLink>
+            </li>
+          )}
+          {auth ? (
+            <button
+              className="p-0 m-0 text-start hover:text-red-600"
+              onClick={handleLogout}
+            >
+              Logout
+            </button>
+          ) : null}
         </ul>
       </nav>
     </div>
-  )
+  );
 }

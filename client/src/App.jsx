@@ -1,11 +1,16 @@
-import { useState } from 'react'
-import 'react-toastify/dist/ReactToastify.css'
+import { useState } from "react";
+import { Outlet } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
+import Header from "./components/header/Header";
+import NavModal from "./components/NavModal";
+import ProfilePicModal from "./components/profile/ProfilePicModal";
+import CancelModal from "./components/profile/CancelModal";
 
 function App() {
-  const [isNavModal, setIsNavModal] = useState(false)
-  const [showCancelModal, setShowCancelModal] = useState(false)
-  const [showPicModal, setShowPicModal] = useState(false)
-  const [offerId, setOfferId] = useState()
+  const [isNavModal, setIsNavModal] = useState(false);
+  const [showCancelModal, setShowCancelModal] = useState(false);
+  const [showPicModal, setShowPicModal] = useState(false);
+  const [offerId, setOfferId] = useState();
 
   return (
     <div className="relative">
@@ -32,7 +37,7 @@ function App() {
         />
       </main>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
