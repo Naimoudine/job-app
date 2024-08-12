@@ -1,33 +1,30 @@
-import { useRef } from 'react'
-import { useLoaderData, useNavigate } from 'react-router-dom'
-import { faArrowRight, faSearch } from '@fortawesome/free-solid-svg-icons'
+import { useRef } from "react";
+import { useLoaderData, useNavigate } from "react-router-dom";
+import { faArrowRight, faSearch } from "@fortawesome/free-solid-svg-icons";
 
 export async function loader() {
   try {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/companies`)
-    const data = await response.json()
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/companies`);
+    const data = await response.json();
     if (!response.ok) {
-      throw new Error('error while getting compnies')
+      throw new Error("error while getting compnies");
     }
-    return data
-  }
-  catch (error) {
-    throw new Error(error.message)
+    return data;
+  } catch (error) {
+    throw new Error(error.message);
   }
 }
 
 export default function HomePage() {
-  const inputRef = useRef()
-  const navigate = useNavigate()
+  const inputRef = useRef();
+  const navigate = useNavigate();
 
-  const handleSearch = (e) => {
-    const search = inputRef.current.value
-    navigate(`/offers?search=${search}`)
-  }
+  const handleSearch = () => {
+    const search = inputRef.current.value;
+    navigate(`/offers?search=${search}`);
+  };
 
-  const companies = useLoaderData()
-
-  console.table(companies)
+  const companies = useLoaderData();
 
   return (
     <div className="wrapper">
@@ -65,7 +62,7 @@ export default function HomePage() {
       <section className="mt-8 md:mt-16">
         <h2>Discover companies</h2>
         <div className="flex flex-col gap-4 mt-6 sm:flex-row sm:flex-wrap">
-          {companies.slice(3).map(company => (
+          {companies.slice(3).map((company) => (
             <article
               className="w-full md:w-[25rem] md:h-[15rem] bg-gray-200 p-4 rounded-lg"
               key={company.id}
@@ -80,11 +77,10 @@ export default function HomePage() {
           className="flex items-center mt-6 font-semibold text-zinc-900 hover:text-zinc-900/70"
           to="/companies"
         >
-          See more
-          {' '}
+          See more{" "}
           <FontAwesomeIcon className="ml-4 text-xs" icon={faArrowRight} />
         </Link>
       </section>
     </div>
-  )
+  );
 }
