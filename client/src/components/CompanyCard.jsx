@@ -1,7 +1,7 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom'
 
 export default function CompanyCard({ company }) {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   return (
     <article
@@ -15,7 +15,8 @@ export default function CompanyCard({ company }) {
         {company.capital}
       </p>
       <p>
-        <span className="font-semibold">Date of create :</span>{" "}
+        <span className="font-semibold">Date of create :</span>
+        {' '}
         {new Date(company.creation_date).toDateString()}
       </p>
       <p>
@@ -23,5 +24,5 @@ export default function CompanyCard({ company }) {
         {company.location}
       </p>
     </article>
-  );
+  )
 }

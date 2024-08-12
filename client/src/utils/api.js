@@ -1,4 +1,4 @@
-export const checkAuth = async () => {
+export async function checkAuth() {
   try {
     const response = await fetch(
       `${import.meta.env.VITE_API_URL}/verify-auth`,
@@ -8,7 +8,7 @@ export const checkAuth = async () => {
     );
     return response.ok;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return false;
   }
-};
+}

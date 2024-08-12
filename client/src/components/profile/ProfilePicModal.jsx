@@ -1,36 +1,37 @@
-import { useState } from "react";
-import { useAuth } from "../../hooks/useAuth";
-import { useRevalidator } from "react-router-dom";
+import { useState } from 'react'
+import { useRevalidator } from 'react-router-dom'
+import { useAuth } from '../../hooks/useAuth'
 
 export default function ProfilePicModal({ showPicModal, setShowPicModal }) {
-  const [selectedPic, setSelectedPic] = useState();
+  const [selectedPic, setSelectedPic] = useState()
 
-  const { auth } = useAuth();
-  const revalidator = useRevalidator();
+  const { auth } = useAuth()
+  const revalidator = useRevalidator()
 
   const uploadPicture = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    const form = e.target;
-    const formData = new FormData(form);
+    const form = e.target
+    const formData = new FormData(form)
 
     try {
       const response = await fetch(
         `${import.meta.env.VITE_API_URL}/users/${auth.id}/picture`,
         {
-          method: "put",
+          method: 'put',
           body: formData,
-        }
-      );
+        },
+      )
       if (response.status !== 204) {
-        throw new Error("error while downloading picture");
+        throw new Error('error while downloading picture')
       }
-      setShowPicModal(false);
-      return revalidator.revalidate();
-    } catch (error) {
-      throw new Error(error.message);
+      setShowPicModal(false)
+      return revalidator.revalidate()
     }
-  };
+    catch (error) {
+      throw new Error(error.message)
+    }
+  }
 
   return (
     <div
@@ -53,8 +54,8 @@ export default function ProfilePicModal({ showPicModal, setShowPicModal }) {
             name="picture"
             id="picture"
             onChange={(e) => {
-              const file = e.target.files?.[0];
-              setSelectedPic(file ? URL.createObjectURL(file) : undefined);
+              const file = e.target.files?.[0]
+              setSelectedPic(file ? URL.createObjectURL(file) : undefined)
             }}
           />
           <div className="flex justify-center gap-4 mt-4">
@@ -75,5 +76,5 @@ export default function ProfilePicModal({ showPicModal, setShowPicModal }) {
         </form>
       </section>
     </div>
-  );
+  )
 }

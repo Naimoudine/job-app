@@ -1,16 +1,14 @@
 import {
-  Form,
-  Link,
   useActionData,
   useNavigate,
   useNavigation,
   useRouteError,
 } from "react-router-dom";
-import photo from "../assets/images/desk.avif";
 import { useEffect } from "react";
+import photo from "../assets/images/desk.avif";
 import { useAuth } from "../hooks/useAuth";
 
-export const action = async ({ request }) => {
+export async function action({ request }) {
   const formData = await request.formData();
 
   const email = formData.get("email");
@@ -30,7 +28,7 @@ export const action = async ({ request }) => {
     const { user } = await response.json();
 
     if (!response.ok) {
-      throw new Error(data.message || "Unkwown error while signing in");
+      throw new Error("Unkwown error while signing in");
     }
 
     const userData = {
@@ -47,7 +45,7 @@ export const action = async ({ request }) => {
   } catch (error) {
     throw new Error(error.message);
   }
-};
+}
 
 export default function SignIn() {
   const actionData = useActionData();
