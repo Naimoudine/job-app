@@ -14,11 +14,13 @@ export default function OfferCard({ offer, bookmarks }) {
   const revalidator = useRevalidator();
 
   useEffect(() => {
-    const bookmarked = bookmarks.find(
-      (bookmark) => bookmark.offerId === offer.id
-    );
-    if (bookmarked) {
-      setBookmarked(true);
+    if (bookmarks) {
+      const bookmarked = bookmarks.find(
+        (bookmark) => bookmark.offerId === offer.id
+      );
+      if (bookmarked) {
+        setBookmarked(true);
+      }
     }
   }, [bookmarks]);
 
@@ -88,7 +90,10 @@ export default function OfferCard({ offer, bookmarks }) {
             <FontAwesomeIcon icon={faBookmarkOutline} />
           </button>
         )}
-        <Link className="self-end" to={`/offers/${offer.id}`}>
+        <Link
+          className="self-end font-semibold text-zinc-900 hover:text-zinc-900/70"
+          to={`/offers/${offer.id}`}
+        >
           See offer
         </Link>
       </div>

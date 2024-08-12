@@ -11,7 +11,7 @@ export default function Navbar({ setIsNavModal, setUserModal }) {
       <Link to="/">SJH</Link>
       <ul className="hidden sm:flex sm:gap-4">
         <li>
-          <NavLink to="/offers">Offers</NavLink>
+          <NavLink to="/offers">Job offers</NavLink>
         </li>
         <li>
           <NavLink to="/companies">Companies</NavLink>

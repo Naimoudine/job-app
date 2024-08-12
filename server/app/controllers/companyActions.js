@@ -18,7 +18,17 @@ const read = async (req, res, next) => {
   }
 };
 
+const readOffers = async (req, res, next) => {
+  try {
+    const offers = await tables.companies.readOffers(req.params.id);
+    res.json(offers);
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   browse,
   read,
+  readOffers,
 };

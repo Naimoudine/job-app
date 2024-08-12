@@ -99,7 +99,7 @@ export default function OfferPage() {
       <h1>{offer.title}</h1>
       <Link
         className="inline-block mt-4 md:mt-6"
-        to={`/company/${offer.company_id}`}
+        to={`/companies/${offer.company_id}`}
       >
         <span className="text-sm font-semibold text-gray-600">
           {offer.company_name}

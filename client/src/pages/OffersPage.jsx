@@ -74,7 +74,7 @@ export default function OffersPage() {
         </Form>
       </section>
       <section className="mt-8 sm:mt-16">
-        <h2>Offers</h2>
+        <h2>Job ffers</h2>
         <div className="flex flex-col gap-6 mt-8 sm:flex-row sm:flex-wrap">
           {offers &&
             offers.map((offer) => (

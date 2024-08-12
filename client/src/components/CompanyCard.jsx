@@ -5,7 +5,7 @@ export default function CompanyCard({ company }) {
 
   return (
     <article
-      className="w-full md:w-[25rem] bg-gray-200 p-4 rounded-lg flex flex-col gap-2"
+      className="w-full md:w-[25rem] bg-gray-200 p-4 rounded-lg flex flex-col gap-2 cursor-pointer hover:bg-gray-200/70"
       onClick={() => navigate(`/companies/${company.id}`)}
     >
       <h3>{company.name}</h3>

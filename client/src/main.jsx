@@ -22,6 +22,7 @@ import ProfilePage, { loader as profileLoader } from "./pages/ProfilePage.jsx";
 import CompaniesPage, {
   loader as companiesLoader,
 } from "./pages/CompaniesPage.jsx";
+import ComapnyPage, { loader as companyLoader } from "./pages/ComapnyPage.jsx";
 
 const protectedRoute = (routeConfig) => {
   return {
@@ -51,16 +52,16 @@ const router = createBrowserRouter([
         element: <HomePage />,
         loader: homeLoader,
       },
-      {
-        path: "/offers",
-        element: <OffersPage />,
-        loader: offersLoader,
-      },
       protectedRoute({
         path: "/profile",
         element: <ProfilePage />,
         loader: profileLoader,
       }),
+      {
+        path: "/offers",
+        element: <OffersPage />,
+        loader: offersLoader,
+      },
       {
         path: "/offers/:id",
         element: <OfferPage />,
@@ -71,6 +72,11 @@ const router = createBrowserRouter([
         path: "/companies",
         element: <CompaniesPage />,
         loader: companiesLoader,
+      },
+      {
+        path: "/companies/:id",
+        element: <ComapnyPage />,
+        loader: companyLoader,
       },
     ],
   },
