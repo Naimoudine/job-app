@@ -19,6 +19,9 @@ import SignUp, { action as signUpAction } from "./pages/SignUp.jsx";
 import { AuthProvider } from "./hooks/useAuth.jsx";
 import { checkAuth } from "./utils/api.js";
 import ProfilePage, { loader as profileLoader } from "./pages/ProfilePage.jsx";
+import CompaniesPage, {
+  loader as companiesLoader,
+} from "./pages/CompaniesPage.jsx";
 
 const protectedRoute = (routeConfig) => {
   return {
@@ -63,6 +66,11 @@ const router = createBrowserRouter([
         element: <OfferPage />,
         loader: offerLoader,
         action: offerAction,
+      },
+      {
+        path: "/companies",
+        element: <CompaniesPage />,
+        loader: companiesLoader,
       },
     ],
   },

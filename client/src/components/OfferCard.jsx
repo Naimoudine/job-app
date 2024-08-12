@@ -69,7 +69,7 @@ export default function OfferCard({ offer, bookmarks }) {
   };
 
   return (
-    <section className="w-full md:w-[25rem] h-[18rem] bg-gray-200 p-4 rounded-lg flex flex-col gap-2 justify-between">
+    <article className="w-full md:w-[25rem] h-[18rem] bg-gray-200 p-4 rounded-lg flex flex-col gap-2 justify-between">
       <h3>{offer.title}</h3>
       <p>{offer.company_name}</p>
       <div className="flex flex-wrap gap-2">
@@ -92,6 +92,6 @@ export default function OfferCard({ offer, bookmarks }) {
           See offer
         </Link>
       </div>
-    </section>
+    </article>
   );
 }
