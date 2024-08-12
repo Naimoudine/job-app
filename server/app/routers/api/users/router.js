@@ -1,8 +1,9 @@
 const express = require("express");
+
 const router = express.Router();
 
 // middleware
-const { hashPassword, verifyToken } = require("../../../services/auth");
+const { hashPassword } = require("../../../services/auth");
 const uploadCv = require("../../../services/uploadCv");
 const uploadPicture = require("../../../services/uploadProfilPic");
 

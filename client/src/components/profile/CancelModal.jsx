@@ -1,13 +1,13 @@
-import { useRevalidator } from "react-router-dom";
-import { useAuth } from "../../hooks/useAuth";
+import { useRevalidator } from 'react-router-dom'
+import { useAuth } from '../../hooks/useAuth'
 
 export default function CancelModal({
   showCancelModal,
   setShowCancelModal,
   offerId,
 }) {
-  const { auth } = useAuth();
-  const revalidator = useRevalidator();
+  const { auth } = useAuth()
+  const revalidator = useRevalidator()
 
   const handleCancel = async () => {
     try {
@@ -16,19 +16,20 @@ export default function CancelModal({
           auth.id
         }/applications/${offerId}`,
         {
-          method: "delete",
-          credentials: "include",
-        }
-      );
+          method: 'delete',
+          credentials: 'include',
+        },
+      )
       if (response.status !== 204) {
-        throw new Error("error while canceling application");
+        throw new Error('error while canceling application')
       }
-      setShowCancelModal(false);
-      return revalidator.revalidate();
-    } catch (error) {
-      throw new Error(error.message);
+      setShowCancelModal(false)
+      return revalidator.revalidate()
     }
-  };
+    catch (error) {
+      throw new Error(error.message)
+    }
+  }
   return (
     <div
       className={
@@ -63,5 +64,5 @@ export default function CancelModal({
         </div>
       </section>
     </div>
-  );
+  )
 }

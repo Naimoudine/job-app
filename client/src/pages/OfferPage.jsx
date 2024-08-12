@@ -1,16 +1,9 @@
 import { useState } from "react";
-import {
-  useLoaderData,
-  Link,
-  Form,
-  useNavigation,
-  redirect,
-} from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
+import { redirect, useLoaderData, useNavigation } from "react-router-dom";
+import { toast } from "react-toastify";
 
-export const loader = async ({ params }) => {
+export async function loader({ params }) {
   const currUser = JSON.parse(localStorage.getItem("user"));
-  console.log(currUser);
   try {
     if (currUser) {
       const [offerData, userData, applicationsData] = await Promise.all([
@@ -56,9 +49,9 @@ export const loader = async ({ params }) => {
   } catch (error) {
     throw new Error(error);
   }
-};
+}
 
-export const action = async ({ request, params }) => {
+export async function action({ request, params }) {
   const user = JSON.parse(localStorage.getItem("user"));
   const formData = await request.formData();
 
@@ -83,7 +76,7 @@ export const action = async ({ request, params }) => {
   } catch (error) {
     throw new Error(error.message);
   }
-};
+}
 
 export default function OfferPage() {
   const { offer, user, applications } = useLoaderData();
@@ -99,7 +92,7 @@ export default function OfferPage() {
       <h1>{offer.title}</h1>
       <Link
         className="inline-block mt-4 md:mt-6"
-        to={`/company/${offer.company_id}`}
+        to={`/companies/${offer.company_id}`}
       >
         <span className="text-sm font-semibold text-gray-600">
           {offer.company_name}

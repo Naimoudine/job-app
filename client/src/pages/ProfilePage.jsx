@@ -1,14 +1,8 @@
 import { useState } from "react";
-import ProfileInfos from "../components/profile/ProfileInfos";
 import { useLoaderData, useOutletContext } from "react-router-dom";
-import ApplicationsInfos from "../components/profile/ApplicationsInfos";
-import BookmarksInfos from "../components/profile/BookmarksInfos";
-import CancelModal from "../components/profile/CancelModal";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
-import ProfilePicModal from "../components/profile/ProfilePicModal";
 
-export const loader = async () => {
+export async function loader() {
   const currUser = JSON.parse(localStorage.getItem("user"));
 
   try {
@@ -38,15 +32,13 @@ export const loader = async () => {
   } catch (error) {
     throw new Error(error.message);
   }
-};
+}
 
 export default function ProfilePage() {
   const [displayedSection, setDisplayedSection] = useState("Profile");
 
   const { user, applications, bookmarks } = useLoaderData();
   const { setShowPicModal } = useOutletContext();
-
-  console.log(user);
 
   return (
     <div className="wrapper">
@@ -78,7 +70,7 @@ export default function ProfilePage() {
                     ? `after:absolute after:content-[" "] after:top-[54px] after:left-0 after:w-full after:h-[3px] after:bg-red-600 transition`
                     : null
                 }
-                onClick={(e) => setDisplayedSection(e.target.innerText)}
+                onClick={(e) => setDisplayedSection(e.target.textContent)}
               >
                 Profile
               </button>
@@ -90,7 +82,7 @@ export default function ProfilePage() {
                     ? `after:absolute after:content-[" "] after:top-[54px] after:left-0 after:w-full after:h-[3px] after:bg-red-600 transition`
                     : null
                 }
-                onClick={(e) => setDisplayedSection(e.target.innerText)}
+                onClick={(e) => setDisplayedSection(e.target.textContent)}
               >
                 Applied
               </button>
@@ -102,7 +94,7 @@ export default function ProfilePage() {
                     ? `after:absolute after:content-[" "] after:top-[54px] after:left-0 after:w-full after:h-[3px] after:bg-red-600 transition`
                     : null
                 }
-                onClick={(e) => setDisplayedSection(e.target.innerText)}
+                onClick={(e) => setDisplayedSection(e.target.textContent)}
               >
                 Bookmarks
               </button>
