@@ -10,23 +10,21 @@ export default function Connexion() {
           <h1>Welcome back</h1>
           <Form method="post" className="flex flex-col gap-10 mt-24">
             <div className="flex flex-col gap-4">
-              <label htmlFor="email">Email*</label>
+              <label htmlFor="email">Pro email*</label>
               <input
                 className="p-3 text-lg border border-gray-200 rounded-lg"
                 type="email"
                 name="email"
                 id="email"
-                placeholder="Enter email"
               />
             </div>
             <div className="flex flex-col gap-4">
-              <label htmlFor="siret">Company unique number*</label>
+              <label htmlFor="siret">Password*</label>
               <input
                 className="p-3 text-lg border border-gray-200 rounded-lg"
-                type="text"
-                name="siret"
-                id="siret"
-                placeholder="Enter your company unique number"
+                type="password"
+                name="password"
+                id="password"
               />
             </div>
             <button

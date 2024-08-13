@@ -7,7 +7,6 @@ create table user (
   picture varchar(255),
   cv varchar(255),
   is_admin boolean not null default false,
-  is_company boolean not null default false,
   created_at timestamp default current_timestamp()
 );
 
@@ -18,6 +17,14 @@ create table company (
   location varchar(255),
   capital varchar(255),
   creation_date date
+);
+
+create table companyAccout (
+  id int unsigned primary key auto_increment not null,
+  email varchar(255) not null,
+  passowrd varchar(255) not null,
+  company_id int unsigned not null,
+  foreign key (company_id) references company(id) on delete cascade
 );
 
 create table offer (
