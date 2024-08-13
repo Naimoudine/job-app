@@ -1,43 +1,44 @@
-import { useLoaderData } from 'react-router-dom'
-import { faSearch } from '@fortawesome/free-solid-svg-icons'
+import { useLoaderData, Form } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import OfferCard from "../components/OfferCard";
+import { ToastContainer } from "react-toastify";
 
 export async function loader() {
-  const user = JSON.parse(localStorage.getItem('user'))
+  const user = JSON.parse(localStorage.getItem("user"));
   try {
     if (user) {
       const [offersData, bookmarksData] = await Promise.all([
         fetch(`${import.meta.env.VITE_API_URL}/offers`),
         fetch(`${import.meta.env.VITE_API_URL}/users/${user.id}/bookmarks`),
-      ])
+      ]);
 
       if (!offersData.ok || !bookmarksData.ok) {
-        throw new Error('error while fetching data')
+        throw new Error("error while fetching data");
       }
       const [offers, bookmarks] = await Promise.all([
         offersData.json(),
         bookmarksData.json(),
-      ])
+      ]);
 
-      return { offers, bookmarks }
-    }
-    else {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/offers`)
-      const offers = await response.json()
+      return { offers, bookmarks };
+    } else {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/offers`);
+      const offers = await response.json();
 
       if (!response.ok) {
-        throw new Error('error while fetching offers')
+        throw new Error("error while fetching offers");
       }
 
-      return { offers }
+      return { offers };
     }
-  }
-  catch (error) {
-    throw new Error(error.message)
+  } catch (error) {
+    throw new Error(error.message);
   }
 }
 
 export default function OffersPage() {
-  const { offers, bookmarks } = useLoaderData()
+  const { offers, bookmarks } = useLoaderData();
   return (
     <div className="wrapper">
       <section>
@@ -75,17 +76,17 @@ export default function OffersPage() {
       <section className="mt-8 sm:mt-16">
         <h2>Job ffers</h2>
         <div className="flex flex-col gap-6 mt-8 sm:flex-row sm:flex-wrap">
-          {offers
-          && offers.map(offer => (
-            <OfferCard
-              key={offer.id}
-              offer={offer}
-              bookmarks={bookmarks || []}
-            />
-          ))}
+          {offers &&
+            offers.map((offer) => (
+              <OfferCard
+                key={offer.id}
+                offer={offer}
+                bookmarks={bookmarks || []}
+              />
+            ))}
         </div>
       </section>
       <ToastContainer />
     </div>
-  )
+  );
 }

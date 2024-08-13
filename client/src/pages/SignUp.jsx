@@ -2,43 +2,44 @@ import {
   redirect,
   useNavigation,
   useRouteError,
-} from 'react-router-dom'
-import photo from '../assets/images/desk.avif'
+  Link,
+  Form,
+} from "react-router-dom";
+import photo from "../assets/images/desk.avif";
 
 export async function action({ request }) {
-  const formData = await request.formData()
+  const formData = await request.formData();
 
-  const firstname = formData.get('firstname')
-  const lastname = formData.get('lastname')
-  const email = formData.get('email')
-  const password = formData.get('password')
+  const firstname = formData.get("firstname");
+  const lastname = formData.get("lastname");
+  const email = formData.get("email");
+  const password = formData.get("password");
 
   try {
     const response = await fetch(`${import.meta.env.VITE_API_URL}/users`, {
-      method: 'post',
-      headers: { 'Content-Type': 'application/json' },
+      method: "post",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         firstname,
         lastname,
         email,
         password,
       }),
-    })
-    const data = await response.json()
+    });
+    const data = await response.json();
     if (response.status !== 201) {
-      throw new Error(data.message || 'Unknown Error while creating user')
+      throw new Error(data.message || "Unknown Error while creating user");
     }
-    return redirect('/signIn')
-  }
-  catch (error) {
-    throw new Error(error.message)
+    return redirect("/signIn");
+  } catch (error) {
+    throw new Error(error.message);
   }
 }
 
 export default function SignUp() {
-  const error = useRouteError()
-  const navigation = useNavigation()
-  const isSubmitting = navigation.state === 'submitting'
+  const error = useRouteError();
+  const navigation = useNavigation();
+  const isSubmitting = navigation.state === "submitting";
 
   return (
     <div className="flex items-center w-full h-full">
@@ -47,8 +48,7 @@ export default function SignUp() {
         <section className="mt-8">
           <h1>Welcome back</h1>
           <p className="mt-4">
-            No an account ?
-            {' '}
+            No an account ?{" "}
             <Link
               className="font-semibold underline underline-offset-2"
               to="/signin"
@@ -106,7 +106,7 @@ export default function SignUp() {
               className="py-3 rounded-lg bg-zinc-900 text-neutral-100 disabled:bg-zinc-900/60"
               type="submit"
             >
-              {isSubmitting ? 'Signing up...' : 'Sign up'}
+              {isSubmitting ? "Signing up..." : "Sign up"}
             </button>
           </Form>
         </section>
@@ -119,5 +119,5 @@ export default function SignUp() {
         />
       </div>
     </div>
-  )
+  );
 }
