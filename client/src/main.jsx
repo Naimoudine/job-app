@@ -23,6 +23,8 @@ import CompaniesPage, {
   loader as companiesLoader,
 } from "./pages/CompaniesPage.jsx";
 import CompanyPage, { loader as companyLoader } from "./pages/CompanyPage.jsx";
+import Connexion from "./pages/company/Connexion.jsx";
+import DashboardCompany from "./pages/company/DashboardCompany.jsx";
 
 function protectedRoute(routeConfig) {
   return {
@@ -91,6 +93,15 @@ const router = createBrowserRouter([
     element: <SignUp />,
     action: signUpAction,
     errorElement: <SignUp />,
+  },
+  {
+    path: "connexion",
+    element: <Connexion />,
+  },
+  {
+    path: "/company/dashboard",
+    element: <DashboardCompany />,
+    children: [],
   },
 ]);
 

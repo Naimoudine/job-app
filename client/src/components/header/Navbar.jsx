@@ -16,6 +16,9 @@ export default function Navbar({ setIsNavModal, setUserModal }) {
         <li>
           <NavLink to="/companies">Companies</NavLink>
         </li>
+        <li>
+          <NavLink to="/connexion">Are you a company ?</NavLink>
+        </li>
       </ul>
       {auth ? (
         <button
