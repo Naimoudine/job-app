@@ -23,6 +23,7 @@ import CompaniesPage, {
   loader as companiesLoader,
 } from "./pages/CompaniesPage.jsx";
 import CompanyPage, { loader as companyLoader } from "./pages/CompanyPage.jsx";
+import Error from "./pages/Error.jsx";
 
 function protectedRoute(routeConfig) {
   return {
@@ -46,6 +47,7 @@ function protectedRoute(routeConfig) {
 const router = createBrowserRouter([
   {
     element: <App />,
+    errorElement: <Error />,
     children: [
       {
         path: "",
