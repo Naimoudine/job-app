@@ -27,18 +27,18 @@ export async function action({ request }) {
       credentials: "include",
     });
 
-    const { user } = await response.json();
+    const data = await response.json();
 
     if (!response.ok) {
-      throw new Error("Unkwown error while signing in");
+      throw new Error(data.message || "Error while signing in");
     }
 
     const userData = {
-      id: user?.id,
-      firstname: user?.firstname,
-      lastname: user?.lastname,
-      avatar: user?.avatar,
-      isAdmin: user?.is_admin,
+      id: data.user?.id,
+      firstname: data.user?.firstname,
+      lastname: data.user?.lastname,
+      avatar: data.user?.avatar,
+      isAdmin: data.user?.is_admin,
     };
 
     localStorage.setItem("user", JSON.stringify(userData));
