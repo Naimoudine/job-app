@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useRevalidator } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
+import { ToastContainer, toast } from "react-toastify";
 
 export default function ProfileInfos({ user }) {
   const [edit, setEdit] = useState(false);
@@ -24,9 +25,18 @@ export default function ProfileInfos({ user }) {
       );
 
       if (response.status !== 204) {
+        toast.error(
+          "Error while downloading cv! Please check the format and try again.",
+          {
+            position: "top-left",
+          }
+        );
         throw new Error("error while editing profile informations");
       }
       setEdit(false);
+      toast.success("Your profile has been changed.", {
+        position: "top-left",
+      });
       return revalidator.revalidate();
     } catch (error) {
       throw new Error(error.message);
@@ -94,7 +104,7 @@ export default function ProfileInfos({ user }) {
         {edit ? (
           <div className="flex mt-4">
             <button
-              className="px-4 py-2 text-black bg-gray-300 rounded-xl text-neutral-100 hover:bg-gray-300/70"
+              className="px-4 py-2 text-black bg-gray-300 rounded-xl hover:bg-gray-300/70"
               type="button"
               onClick={() => setEdit(false)}
             >
@@ -117,6 +127,7 @@ export default function ProfileInfos({ user }) {
           </button>
         )}
       </form>
+      <ToastContainer />
     </div>
   );
 }

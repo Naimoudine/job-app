@@ -1,37 +1,43 @@
-import { useState } from 'react'
-import { useRevalidator } from 'react-router-dom'
-import { useAuth } from '../../hooks/useAuth'
+import { useState } from "react";
+import { useRevalidator } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
+import { ToastContainer, toast } from "react-toastify";
 
 export default function ProfilePicModal({ showPicModal, setShowPicModal }) {
-  const [selectedPic, setSelectedPic] = useState()
+  const [selectedPic, setSelectedPic] = useState();
 
-  const { auth } = useAuth()
-  const revalidator = useRevalidator()
+  const { auth } = useAuth();
+  const revalidator = useRevalidator();
 
   const uploadPicture = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    const form = e.target
-    const formData = new FormData(form)
+    const form = e.target;
+    const formData = new FormData(form);
 
     try {
       const response = await fetch(
         `${import.meta.env.VITE_API_URL}/users/${auth.id}/picture`,
         {
-          method: 'put',
+          method: "put",
           body: formData,
-        },
-      )
+        }
+      );
       if (response.status !== 204) {
-        throw new Error('error while downloading picture')
+        toast.error(
+          "Error while downloading picture! Please check the format and try again.",
+          {
+            position: "top-left",
+          }
+        );
+        throw new Error("error while downloading picture");
       }
-      setShowPicModal(false)
-      return revalidator.revalidate()
+      setShowPicModal(false);
+      return revalidator.revalidate();
+    } catch (error) {
+      throw new Error(error.message);
     }
-    catch (error) {
-      throw new Error(error.message)
-    }
-  }
+  };
 
   return (
     <div
@@ -54,8 +60,8 @@ export default function ProfilePicModal({ showPicModal, setShowPicModal }) {
             name="picture"
             id="picture"
             onChange={(e) => {
-              const file = e.target.files?.[0]
-              setSelectedPic(file ? URL.createObjectURL(file) : undefined)
+              const file = e.target.files?.[0];
+              setSelectedPic(file ? URL.createObjectURL(file) : undefined);
             }}
           />
           <div className="flex justify-center gap-4 mt-4">
@@ -75,6 +81,7 @@ export default function ProfilePicModal({ showPicModal, setShowPicModal }) {
           </div>
         </form>
       </section>
+      <ToastContainer />
     </div>
-  )
+  );
 }
