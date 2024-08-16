@@ -18,7 +18,7 @@ Pour les entreprises, il est possible de publier des annonces pour recruter des 
 
   ## Installation
 
-  Afin de lancer le projet sur votre machine vous devez vous assurez d'avoir node installer et mysql puis suivez les étapes suivantes :
+  Afin de lancer le projet sur votre machine vous devez vous assurez d'avoir node et mysql installé puis suivez les étapes suivantes :
   1. clonnez le projet : `git clone git@github.com:Naimoudine/job-app.git`
   2. Accédez au répertoire du projet : `cd JOB-APP`
   3. Installez les dépendances du projet : `npm install`
