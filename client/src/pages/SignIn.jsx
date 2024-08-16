@@ -5,6 +5,7 @@ import {
   useRouteError,
   Link,
   Form,
+  useLocation,
 } from "react-router-dom";
 import { useEffect } from "react";
 import photo from "../assets/images/desk.avif";
@@ -55,13 +56,15 @@ export default function SignIn() {
   const error = useRouteError();
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
+  const { search } = useLocation();
+  const from = search.slice(12);
 
   const { setAuth } = useAuth();
 
   useEffect(() => {
     if (actionData) {
       setAuth(actionData);
-      navigate("/", { replace: true });
+      navigate(from, { replace: true });
     }
   }, [actionData, navigate]);
 

@@ -1,4 +1,4 @@
-import { useNavigate, NavLink } from "react-router-dom";
+import { useNavigate, NavLink, useLocation } from "react-router-dom";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useAuth } from "../hooks/useAuth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -7,6 +7,7 @@ export default function NavModal({ navModal }) {
   const { isNavModal, setIsNavModal } = navModal;
 
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   const { auth } = useAuth();
 
   const handleLogout = async () => {
@@ -68,7 +69,10 @@ export default function NavModal({ navModal }) {
             </li>
           ) : (
             <li>
-              <NavLink to="/signIn" onClick={() => setIsNavModal(false)}>
+              <NavLink
+                to={`/signIn?redirectTo=${pathname}`}
+                onClick={() => setIsNavModal(false)}
+              >
                 Sign In/Sign up
               </NavLink>
             </li>
