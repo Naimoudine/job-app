@@ -1,9 +1,9 @@
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import OfferCard from "../components/OfferCard";
 import { ToastContainer } from "react-toastify";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export async function loader() {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -40,7 +40,27 @@ export async function loader() {
 
 export default function OffersPage() {
   const { offers, bookmarks } = useLoaderData();
-  const [filtered, setFilter] = useState(offers);
+  const [filtered, setFiltered] = useState(offers);
+
+  const { search } = useLocation();
+
+  useEffect(() => {
+    if (search) {
+      setFiltered(
+        offers.filter(
+          (offer) =>
+            offer.title.toLowerCase().includes(search.slice(8).toLowerCase()) ||
+            offer.sector
+              .toLowerCase()
+              .includes(search.slice(8).toLowerCase()) ||
+            offer.company_name
+              .toLowerCase()
+              .includes(search.slice(8).toLowerCase()) ||
+            offer.location.toLowerCase().includes(search.slice(8).toLowerCase())
+        )
+      );
+    }
+  }, []);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -50,7 +70,7 @@ export default function OffersPage() {
     const keyword = formData.get("search");
     const location = formData.get("location");
 
-    setFilter(
+    setFiltered(
       offers.filter(
         (offer) =>
           (offer.title.toLowerCase().includes(keyword.toLowerCase()) ||
@@ -76,14 +96,14 @@ export default function OffersPage() {
               role="presentation"
             />
             <input
-              type="text"
+              type="search"
               name="search"
               id="search"
               placeholder="Search for a job title or a key-word"
               className="w-full p-2 border-2 outline-none sm:border-y-0 sm:border-r- sm:border-l-0 border-zinc-900 "
             />
             <input
-              type="text"
+              type="search"
               name="location"
               id="location"
               placeholder="Enter a location"
