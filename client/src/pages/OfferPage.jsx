@@ -5,6 +5,7 @@ import {
   useNavigation,
   Link,
   Form,
+  useLocation,
 } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 
@@ -87,6 +88,7 @@ export async function action({ request, params }) {
 export default function OfferPage() {
   const { offer, user, applications } = useLoaderData();
   const navigation = useNavigation();
+  const { pathname } = useLocation();
   const isSubmitting = navigation.state === "submitting";
 
   const [firstname, setFirstname] = useState(user?.firstname || "");
@@ -180,13 +182,13 @@ export default function OfferPage() {
             <div className="flex justify-center w-full gap-4 mt-4">
               <Link
                 className="px-4 py-2 rounded-lg bg-zinc-900 text-neutral-100"
-                to="/signin"
+                to={`/signin?redirectTo=${pathname}`}
               >
                 SignIn
               </Link>
               <Link
                 className="px-4 py-2 rounded-lg bg-neutral-100 text-zinc-900"
-                to="/signup"
+                to={`/signup`}
               >
                 SignUp
               </Link>
