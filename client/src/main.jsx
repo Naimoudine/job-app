@@ -23,7 +23,9 @@ import CompaniesPage, {
   loader as companiesLoader,
 } from "./pages/CompaniesPage.jsx";
 import CompanyPage, { loader as companyLoader } from "./pages/CompanyPage.jsx";
-import Connexion from "./pages/company/Connexion.jsx";
+import Connexion, {
+  action as connexionAction,
+} from "./pages/company/Connexion.jsx";
 import DashboardCompany from "./pages/company/DashboardCompany.jsx";
 
 function protectedRoute(routeConfig) {
@@ -95,8 +97,9 @@ const router = createBrowserRouter([
     errorElement: <SignUp />,
   },
   {
-    path: "connexion",
+    path: "/connexion",
     element: <Connexion />,
+    action: connexionAction,
   },
   {
     path: "/company/dashboard",

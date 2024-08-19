@@ -19,10 +19,10 @@ create table company (
   creation_date date
 );
 
-create table companyAccout (
+create table companyAccount (
   id int unsigned primary key auto_increment not null,
   email varchar(255) not null,
-  passowrd varchar(255) not null,
+  password varchar(255) not null,
   company_id int unsigned not null,
   foreign key (company_id) references company(id) on delete cascade
 );

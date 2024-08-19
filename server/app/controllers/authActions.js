@@ -1,59 +1,95 @@
-const argon2 = require('argon2')
-const jwt = require('jsonwebtoken')
-const dayjs = require('dayjs')
-const tables = require('../../database/tables')
+const argon2 = require("argon2");
+const jwt = require("jsonwebtoken");
+const dayjs = require("dayjs");
+const tables = require("../../database/tables");
 
 async function login(req, res, next) {
   try {
-    const user = await tables.users.readByEmail(req.body.email)
+    const user = await tables.users.readByEmail(req.body.email);
 
     if (!user) {
       res.status(422).json({
         message:
-          'We couldn\'t find an account matching the email and password you entered. Please check your email and password and try again.',
-      })
-      return
+          "We couldn't find an account matching the email and password you entered. Please check your email and password and try again.",
+      });
+      return;
     }
 
-    const verify = argon2.verify(user.hashed_password, req.body.password)
+    const verify = argon2.verify(user.hashed_password, req.body.password);
 
     if (verify) {
-      delete user.hashed_password
+      delete user.hashed_password;
 
       const token = jwt.sign(
         { sub: user.id, isAdmin: user.is_admin },
         process.env.APP_SECRET,
         {
-          expiresIn: '1h',
-        },
-      )
+          expiresIn: "1h",
+        }
+      );
 
-      res.cookie('auth_token', token, {
-        sameSite: process.env.NODE_ENV !== 'development',
+      res.cookie("auth_token", token, {
+        sameSite: process.env.NODE_ENV !== "development",
         httpOnly: true,
-        expires: dayjs().add(30, 'days').toDate(),
-      })
+        expires: dayjs().add(30, "days").toDate(),
+      });
 
-      res.json({ user })
-    }
-    else {
+      res.json({ user });
+    } else {
       res.status(422).json({
         message:
-          'We couldn\'t find an account matching the email and password you entered. Please check your email and password and try again.',
-      })
+          "We couldn't find an account matching the email and password you entered. Please check your email and password and try again.",
+      });
     }
+  } catch (error) {
+    next(error);
   }
-  catch (error) {
-    next(error)
+}
+
+async function companyLogin(req, res, next) {
+  try {
+    const company = await tables.companies.readByEmail(req.body.email);
+    if (!company) {
+      res.status(422).json({
+        message:
+          "We couldn't find an account matching the email and password you entered. Please check your email and password and try again.",
+      });
+      return;
+    }
+
+    const verify = argon2.verify(company.password, req.body.password);
+
+    if (verify) {
+      delete company.password;
+
+      const token = jwt.sign({ sub: company.id }, process.env.APP_SECRET, {
+        expiresIn: "1h",
+      });
+
+      res.cookie("company_token", token, {
+        sameSite: process.env.NODE_ENV !== "development",
+        httpOnly: true,
+        expires: dayjs().add(30, "days").toDate(),
+      });
+
+      res.json(company);
+    } else {
+      res.status(422).json({
+        message:
+          "We couldn't find an account matching the email and password you entered. Please check your email and password and try again.",
+      });
+    }
+  } catch (error) {
+    next(error);
   }
 }
 
 function isLogged({ res }) {
-  res.sendStatus(200)
+  res.sendStatus(200);
 }
 
 function logout({ res }) {
-  res.clearCookie('auth_token').sendStatus(200)
+  res.clearCookie("auth_token").sendStatus(200);
 }
 
-module.exports = { login, isLogged, logout }
+module.exports = { login, isLogged, logout, companyLogin };

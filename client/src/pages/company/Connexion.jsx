@@ -1,7 +1,45 @@
-import { Link, Form } from "react-router-dom";
+import { Link, Form, useActionData, useNavigate } from "react-router-dom";
 import photo from "../../assets/images/desk.avif";
+import { useEffect } from "react";
+
+export async function action({ request }) {
+  const formData = await request.formData();
+
+  const email = formData.get("email");
+  const password = formData.get("password");
+
+  try {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/connexion`, {
+      method: "post",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || "Unknwon error while getting user");
+    }
+
+    return data;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+}
 
 export default function Connexion() {
+  const account = useActionData();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (account) {
+      navigate("/company/dashboard");
+    }
+  }, [account]);
+
   return (
     <div className="flex flex-col w-full h-full md:flex-row-reverse">
       <div className="w-1/2 h-full p-4">
